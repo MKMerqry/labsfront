@@ -1,0 +1,92 @@
+<div class="page-heading">
+        <h1 class="page-title">{{title}}</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a routerLink="/index"><i class="la la-home font-20"></i></a>
+            </li>
+            <li class="breadcrumb-item">
+                <a routerLink="/upresultado/list">lista</a>
+            </li>
+    
+        </ol>
+    </div>
+    <div class="page-content fade-in-up">
+        <div class="ibox">
+            <div class="ibox-head">
+                <div class="mt-4 mb-4">                                                                                              
+                    <button class="btn btn-outline-info btn-icon-only btn-circle btn-sm btn-thick"><i class="la la-bars" routerLink="/upresultado/list"></i></button>
+                    <button class="btn btn-outline-info btn-icon-only btn-circle btn-sm btn-thick" ><i class="la la-save"></i></button>
+                </div>
+            </div>      
+    
+            <div class="ibox-body">
+                <form class="form-info" id="articuloforma" [formGroup]="upfileforma">
+                    <div class="row">
+                        <div class="col-sm-3 form-group mb-4">
+                            <label>Fecha</label>
+                            <input Class="form-control form-control-air" type="text" name="proyecto" placeholder="Fecha" formControlName="fecha" [attr.disabled]="false">
+                        </div>
+
+                        <div class="col-sm-3 form-group mb-4">
+                            <label>Descripcion</label>
+                            <input class="form-control form-control-air" type="text" name="descripcion" placeholder="Descripcion" formControlName="descripcion" [attr.disabled]="mkEditar?'':null" >
+                        </div>           
+                    </div>
+                </form>
+                <ngx-dropzone (change)="onSelect($event)" [accept]="'text/plain'"  [expandable]="true" [multiple]="false" [disabled]= "mkEditar?'':null" > 
+                    <ngx-dropzone-label>Drop it, file!</ngx-dropzone-label>
+                    <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+                        <ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
+                    </ngx-dropzone-preview>
+                </ngx-dropzone>    
+                <br>
+
+                <div class="text-center">
+                        <button  class="btn btn-primary btn-rounded mb-4" (click)="mk_upload()"  [disabled] = "mkEditar?'':null" >
+                                <span  class="btn-icon"><i  class="la la-plus-circle"></i>Subir Archivo</span>
+                        </button>
+                    </div>                  
+            </div>
+        </div>
+
+
+            <div class="ibox">
+                    <div class="ibox-head">
+                        <div class="ibox-title">Tabla de Resultados Archivo</div>
+
+                    </div>
+                    <div class="ibox-body">
+                        <br>
+                            <div class="text-center">
+                                    <button  class="btn btn-primary btn-rounded mb-4" (click)="mk_update()"   >
+                                            <span  class="btn-icon"><i  class="la la-plus-circle"></i>Actualizar</span>
+                                    </button>
+                                </div> 
+                                <br>
+                        <table class="table table-striped table-head-purple mb-5">
+                            <thead>
+                                <tr>
+                                    <th>...</th>
+                                    <th>...</th>
+                                    <th>...</th>
+                                    <th>...</th>
+                                    <th>...</th>
+                                    <th>...</th>
+                                </tr>
+                            </thead>
+                            <tbody >
+                                <tr *ngFor="let u of linkd; let i = index">
+                                        <th> {{ u.mk_0 }} </th>
+                                        <th> {{ u.mk_1 }} </th>  
+                                        <th> {{ u.mk_2  }}</th>
+                                        <th> {{ u.mk_3  }}</th>
+                                        <th> {{ u.mk_4  }}</th>
+                                        <th> {{ u.mk_5  }}</th>
+                                </tr>
+                            </tbody>
+                        </table>                                  
+                    </div>
+                </div>    
+
+    
+</div>

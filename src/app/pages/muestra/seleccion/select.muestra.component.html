@@ -1,0 +1,109 @@
+<div class="page-content fade-in-up">
+    <div class="flexbox-b mb-5">
+        <span class="mr-4 static-badge badge-info"><i class="ti-support"></i></span>
+        <div>
+            <h5 class="font-strong">Impresión de Etiquetas</h5>
+            <h5 class="font-strong">Nota {{soli}}</h5>
+            <div class="text-light">Paciente: <span class="text-black-50">{{solicitud[0].ContactoNombre}}</span></div>
+            <div class="text-light">Doctor: <span class="text-black-50">{{solicitud[0].vendedornombre}}</span></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <!-- <button class="btn btn-primary btn-rounded btn-block mb-4" >
+                <span class="btn-icon"><i class="la la-plus-circle"></i>Generar Orden de Trabajo</span>
+            </button> -->
+        
+            <!-- <div class="text-light"><span class="text-black-50">Detalle Nota {{solicitud[0].Folio}} </span></div> -->
+            <h5 class="font-strong">Estudios vendidos</h5>
+            <ul class="list-group list-group-divider faq-tabs" *ngFor="let u of solicitudD; let i = index">
+                <li class="list-group-item">
+                    <a href="#accordion-3" data-toggle="tab"><i class="badge-point badge-info mr-3"></i>{{u.RenglonID}} - {{u.Articulo}} - {{u.Descripcion}}</a>
+                </li>
+            </ul>
+             <button class="btn btn-primary btn-rounded btn-block mb-4" data-toggle="modal" data-target="#new-question-dialog">
+                    <span class="btn-icon"><i class="la la-plus-circle"></i>Agregar Recipiente</span>
+            </button>             
+
+            <!-- <div class="text-light"><span class="text-black-50">Muestras agregadas </span></div> -->
+            <h5 class="font-strong">Recipiente Asignados Art-Kit</h5>
+            <ul class="list-group list-group-divider faq-tabs" *ngFor="let u of agregados; let i = index">
+                <li class="list-group-item">
+                    <a href="#accordion-3" data-toggle="tab"><i class="badge-point badge-info mr-3"></i>{{agregados[i]}}</a>
+                </li>
+            </ul>  
+
+        </div>
+        <div class="col-lg-9">
+            <div class="ibox">
+                <div class="ibox-body tab-content">
+                        <div class="form-group text-center"> 
+                            <!-- [disabled]="!impreso" -->
+                                <button class="btn btn-outline-primary btn-fix btn-thick" (click)="mk_verImprimir()">
+                                    <!-- <a routerLink="/impselmuestra/{{mkid}}"> -->
+                                        <span class="btn-icon"><i class="ti-printer" ></i>Version para Imprimir</span>
+                                    <!-- </a>                                     -->
+                                </button>
+                                            
+                            </div>
+
+
+                    <div class="tab-pane fade active show" id="accordion-1">
+                        <h5 class="font-strong mb-4 text-primary">Etiquetas</h5>
+                        <tbody>
+                                                            <!-- :'CEN25', :'06 Agosto 2019', :'21:02 PM', edad:36, name:'Fernando Flores Tapia', codigo:'QUO158', cod1:'60011', cod2:'SM30', cod3:'Tubo-Rojo'                             -->
+                                <tr class="border" *ngFor="let u of agregados; let i = index">
+                                  <th>
+                                      <tr>
+                                          <th class="text-left font-13">{{soli}}</th><th colspan="2"class="text-right font-13">{{fecha}} {{hora}}</th>
+                                      </tr>
+                                      <tr>
+                                           <th colspan="3" class="text-right font-13">{{paciente}} Edad:{{edad}} Sexo:H</th>
+                                      </tr>
+                                      <tr>
+                                            <th colspan="3"class="text-center font-13"><ngx-barcode [bc-value]="soli" [bc-display-value]="falce"></ngx-barcode></th>
+                                      </tr>
+                                      <tr>
+                                            <th colspan="3" class="text-center font-13">{{agregados[i]}}</th>
+                                      </tr>
+                                  </th>
+                                </tr>  
+                        </tbody>                      
+                    </div>             
+                </div>
+            </div>
+        </div>     
+    </div>
+    <div class="modal fade" id="new-question-dialog" aria-labelledby="new-question-dialog" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <form class="modal-content" id="formarecip" [formGroup]="formarecip">
+                <div class="modal-header p-4">
+                    <h5 class="modal-title">Agregar Nuevo Recipiente</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="ibox">
+                <div class="ibox-body">
+                    <div class="form-group mb-4 ">
+                        <label >Recipiente</label>
+                            <select class="form-control form-control-air" name="recipiente" formControlName="recipiente" id="recipiente">
+                                    <option *ngFor="let u of recipientelst" [ngValue]="u.Articulo">{{u.Articulo}}</option>                                       
+                            </select>
+                    </div> 
+                    <div class="form-group mb-4 ">
+                        <div *ngFor="let u of agregados; let i = index">
+                            <a class="text-muted text-center font-16" (click)="mk_quitar(i)"><i class="ti-trash"></i></a>{{agregados[i]}}                       
+                        </div>  
+                    </div>  
+                    <div class="form-group mb-4 ">
+                        <button class="btn btn-primary btn-rounded mr-3" type="button" (click)='mkagregar()'>Agregar</button>
+                    </div>
+                </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+

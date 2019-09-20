@@ -1,0 +1,158 @@
+<div class="page-brand">
+    <a routerLink="/index">
+        <span class="brand">Mer
+            <span class="brand-tip">Qry</span>
+        </span>
+        <span class="brand-mini">MQ</span>
+    </a>
+</div>
+<div class="d-flex justify-content-between align-items-center flex-1">
+    <!-- START TOP-LEFT TOOLBAR-->
+    <ul class="nav navbar-toolbar">
+        <li>
+            <a class="nav-link sidebar-toggler js-sidebar-toggler" href="javascript:;">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+        </li>
+        <li>
+            <a class="nav-link search-toggler js-search-toggler" href="javascript:;"><i class="ti-build"></i>
+                <span>{{empresa}}</span> 
+            </a>
+        </li>
+    </ul>
+
+    
+    <!-- START TOP-RIGHT TOOLBAR-->
+    <ul class="nav navbar-toolbar">
+            
+           <!-- END TOP-LEFT TOOLBAR-->
+    <!-- <li class="dropdown dropdown-inbox"> -->
+            
+        <!-- <a class="nav-link dropdown-toggle toolbar-icon" data-toggle="dropdown" href="javascript:;"><i class="ti-email"></i>
+            <span class="envelope-badge">{{mensajes}}</span>
+        </a> -->
+        <!-- <div class="dropdown-menu dropdown-menu-right dropdown-menu-media">
+            <div class="dropdown-arrow"></div>
+            <div class="dropdown-header text-center">
+                <div>
+                    <span class="font-18"><strong>{{mensajes}} New</strong> Messages</span>
+                </div>
+                <button class="btn btn-secondary" (click)="mk_borrar()">Marcar como leídos</button>                
+            </div>
+
+            <div class="p-3" *ngFor="let u of noticia_lst; let i=index">
+                <div  class="media-list media-list-divider scroller" data-height="350px" data-color="#71808f">
+                    <a class="media p-3" >
+                        <div class="media-img">
+                            <img class="img-circle" src="{{u.imagenperfil}}" alt="image" />
+                        </div>
+                        <div class="media-body">
+                            <div class="media-heading">{{u.Nombre}}<small class="text-muted float-right">Proyectos</small></div>
+                            <div class="font-13 text-muted">{{u.Nota}}</div>
+                            <div class="font-13 mt-1">
+                                <span class="d-inline-flex align-items-center text-primary"><i class="ti-support mr-2"></i>{{u.Tipo}}</span>
+                            </div>
+                        </div>
+                    </a>  
+                </div>
+            </div>
+
+        </div>
+    </li> -->
+        <!-- <li class="dropdown dropdown-notification">
+            <a class="nav-link dropdown-toggle toolbar-icon" data-toggle="dropdown" href="javascript:;"><i class="ti-bell rel"><span class="notify-signal"></span></i></a>
+            <div class="dropdown-menu dropdown-menu-right dropdown-menu-media">
+                <div class="dropdown-arrow"></div>
+                <div class="dropdown-header text-center">
+                    <div>
+                        <span class="font-18"><strong>14 New</strong> Notifications</span>
+                    </div>
+                    <a class="text-muted font-13" href="javascript:;">view all</a>
+                </div>
+                <div class="p-3">
+                    <ul class="timeline scroller" data-height="320px">
+                        <li class="timeline-item"><i class="ti-check timeline-icon"></i>2 Issue fixed<small class="float-right text-muted ml-2 nowrap">Just now</small></li>
+                        <li class="timeline-item"><i class="ti-announcement timeline-icon"></i>
+                            <span>7 new feedback
+                                <span class="badge badge-warning badge-pill ml-2">important</span>
+                            </span><small class="float-right text-muted">5 mins</small></li>
+                        <li class="timeline-item"><i class="ti-truck timeline-icon"></i>25 new orders sent<small class="float-right text-muted ml-2 nowrap">24 mins</small></li>
+                        <li class="timeline-item"><i class="ti-shopping-cart timeline-icon"></i>12 New orders<small class="float-right text-muted ml-2 nowrap">45 mins</small></li>
+                        <li class="timeline-item"><i class="ti-user timeline-icon"></i>18 new users registered<small class="float-right text-muted ml-2 nowrap">1 hrs</small></li>
+                        <li class="timeline-item"><i class="ti-harddrives timeline-icon"></i>
+                            <span>Server Error
+                                <span class="badge badge-success badge-pill ml-2">resolved</span>
+                            </span><small class="float-right text-muted">2 hrs</small></li>
+                        <li class="timeline-item"><i class="ti-info-alt timeline-icon"></i>
+                            <span>System Warning
+                                <a class="text-purple ml-2">Check</a>
+                            </span><small class="float-right text-muted ml-2 nowrap">12:07</small></li>
+                        <li class="timeline-item"><i class="fa fa-file-excel-o timeline-icon"></i>The invoice is ready<small class="float-right text-muted ml-2 nowrap">12:30</small></li>
+                        <li class="timeline-item"><i class="ti-shopping-cart timeline-icon"></i>5 New Orders<small class="float-right text-muted ml-2 nowrap">13:45</small></li>
+                        <li class="timeline-item"><i class="ti-arrow-circle-up timeline-icon"></i>Production server up<small class="float-right text-muted ml-2 nowrap">1 days ago</small></li>
+                        <li class="timeline-item"><i class="ti-harddrives timeline-icon"></i>Server overloaded 91%<small class="float-right text-muted ml-2 nowrap">2 days ago</small></li>
+                        <li class="timeline-item"><i class="ti-info-alt timeline-icon"></i>Server error<small class="float-right text-muted ml-2 nowrap">2 days ago</small></li>
+                    </ul>
+                </div>
+            </div>
+        </li> -->
+        <li class="dropdown dropdown-user">
+                <a class="nav-link dropdown-toggle link" data-toggle="dropdown">
+                        <span>{{usuario}}</span>
+                        <img src="{{foto}}" alt="image" />
+                    </a>
+                    <div class="dropdown-menu dropdown-arrow dropdown-menu-right admin-dropdown-menu">
+                        <div class="dropdown-arrow"></div>
+                        <div class="dropdown-header">
+                            <div class="admin-avatar">
+                                <img src="{{foto}}" alt="image" />
+                            </div>
+                            <div>
+                                <h5 class="font-strong text-white">{{usuario}}</h5>
+                                <div>
+                                    <span class="admin-badge mr-3"><i class="ti-alarm-clock mr-2"></i>30m.</span>
+                                    <span class="admin-badge"><i class="ti-lock mr-2"></i>Safe Mode</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="admin-menu-features">
+                            <a class="admin-features-item" data-toggle="modal" data-target="#modal_perfil"><i class="ti-user"></i>
+                                <span>Imagen</span>
+                            </a>
+                            <a class="admin-features-item" href="javascript:;"><i class="ti-support"></i>
+                                <span>Empresa: {{empresa}}</span>
+                            </a>
+                            <a class="admin-features-item" href="javascript:;"><i class="ti-settings"></i>
+                                <span>Sucursal: {{sucursal}}</span>
+                            </a>
+                        </div>
+                        <div class="admin-menu-content">
+                            <div class="text-muted mb-2">MerQry</div>
+                            <div><i class="ti-calendar h1 mr-3 text-light"></i>
+                                <span class="h1 text-success"><sup></sup>{{fechaTrabajo}}</span>
+                            </div>
+                            <div class="d-flex justify-content-between mt-2">
+                                <a class="text-muted" href="javascript:;">Fecha de Trabajo</a>
+                                <a class="d-flex align-items-center" routerLink="/logout" routerLinkActive="router-link-active" >Logout<i class="ti-shift-right ml-2 font-20"></i></a>
+                            </div>
+                        </div>
+                    </div>
+        </li>
+        <li>
+            <a class="nav-link sidebar-toggler js-sidebar-toggler" href="javascript:;">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+        </li> 
+
+        <!-- <li>
+            <a class="nav-link quick-sidebar-toggler">
+                <span class="ti-align-right"></span>
+            </a>
+        </li> -->
+    </ul>
+    <!-- END TOP-RIGHT TOOLBAR-->
+</div>

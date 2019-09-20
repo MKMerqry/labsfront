@@ -1,0 +1,210 @@
+<!-- SESSION EDITAR ACTIVIDAD -->
+<div class="modal fade" id="modal_formapago">
+        <div class="modal-dialog" style="width:400px;" role="document">
+            <div class="modal-content timeout-modal">
+                <div class="modal-body">
+                    <button class="close" data-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center h4 mb-3">Liquidar Nota {{folio}}</div>
+                    <br>
+                     <div id="timeout-activate-box">
+                        <form class="form-horizontal" id="formapago" [formGroup]="formapago" >
+                            <div class="ibox-body">
+                                <div class="form-group mb-4 row">
+                                    <label class="col-sm-2 col-form-label">Forma Pago</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control form-control-air" name="formpago" formControlName="formapago" id="formapago">
+                                                <option *ngFor="let u of formapagcoblst" [ngValue]="u.FormaPagoCobro">{{u.FormaPagoCobro}}</option>                                       
+                                        </select>
+                                    </div>
+                                </div>                                
+                                <div class="form-group mb-4 row">
+                                    <label class="col-sm-2 col-form-label">Importe</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control form-control-air" type="number" name="importe" formControlName="importe" >
+                                    </div>
+                                </div>
+                                <div class="form-group mb-4 row">
+                                    <label class="col-sm-2 col-form-label">Ref.</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control form-control-air" type="text" name="referencia" formControlName="referencia" >
+                                    </div>
+                                </div>        
+                                <div class="form-group text-center">
+                                        <div *ngFor="let u of detallepago; let i = index">
+                                                <div class="font-13"><a class="text-muted font-16" (click)="mk_quitar(i)"><i class="ti-trash"></i></a> {{u.importe | currency}} <b>{{u.formapago}}</b> {{u.referencia}}</div>                        
+                                            </div>                                    
+                                    <button class="btn btn-outline-info btn-fix btn-thick" (click)="mk_agregarforma()">
+                                        <span class="btn-icon"><i class="ti-save"></i>Agregar</span>
+                                    </button>
+                                    <button class="btn btn-outline-success btn-fix btn-thick" (click)="mk_generarIngreso()">
+                                        <span class="btn-icon"><i class="ti-settings"></i>Generar</span>
+                                    </button>
+                                </div>
+    
+                            </div>
+                            
+                        </form>
+
+
+                        <table class="table table-bordered table-hover">
+                                <!-- <thead class="thead-default thead-lg">
+                                    <tr>
+                                        <th><div class="col-4">#</div></th>
+                                        <th><div class="col-4">Pesos</div></th>
+                                        <th><div class="col-4">Dolares TC:{{tipocambio | currency}} </div></th>
+                                    </tr>
+                                </thead> -->
+                                <tbody>
+                                    <tr> 
+                                        <td>
+                                            <div class="text-light text-left">Total</div>
+                                        </td>
+                                        <td>
+                                            <div class="font-strong text-right">
+                                                {{total | currency}}                                                    
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="font-strong text-muted text-right">
+                                                {{totaldolares | currency}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr> 
+                                            <td>
+                                                <div class="text-light text-left">Anticipo</div>
+                                            </td>
+                                            <td>
+                                                <div class="font-strong text-right">
+                                                    {{anticipo | currency}}                                                    
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="font-strong text-muted text-right">
+                                                    {{anticipodolares | currency}} 
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr> 
+                                                <td>
+                                                    <div class="text-light text-left">Saldo</div>
+                                                </td>
+                                                <td>
+                                                    <div class="font-strong text-right">
+                                                        {{resta | currency}}                                                    
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="font-strong text-muted text-right">
+                                                        {{restadolares | currency}}
+                                                    </div>
+                                                </td>
+                                            </tr>                                                                                    
+                                </tbody>
+                            </table>
+
+                        <!-- <pre>{{formaEdit.value | json}}</pre> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END EDITAR ACTIVIDAD MODAL -->
+<div class="page-heading">
+    <h1 class="page-title">{{title}}</h1>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a routerLink="/index"><i class="la la-home font-20"></i></a>
+        </li>        
+    </ol>
+</div>
+<div class="page-content fade-in-up">
+    <div class="ibox">
+        <div class="ibox-body">
+            <div>
+                <button class="btn btn-success btn-icon-only btn-circle btn-sm btn-air" ><i class="la la-plus" routerLink="/proy/edit/0"></i></button>
+            </div>
+            
+            <div class="flexbox mb-4">
+                <div class="flexbox">
+                    <label class="mb-0 mr-2">Type:</label>
+                    <select class="selectpicker show-tick form-control" id="type-filter" title="Please select" data-style="btn-solid" data-width="150px">
+                        <option value="">All</option>
+                        <option>CONCLUIDO</option>
+                        <option>PENDIENTE</option>                        
+                    </select>
+                </div>
+                <div class="input-group-icon input-group-icon-left mr-3">
+                    <span class="input-icon input-icon-right font-16"><i class="ti-search"></i></span>
+                    <input class="form-control form-control-rounded form-control-solid" id="key-search" type="text" placeholder="Search ...">
+                </div>
+            </div>
+            <div class="table-responsive row">
+                <table class="table table-bordered table-hover" id="dtbl_solicitudes">
+                    <thead class="thead-default thead-lg">
+                            
+                        <tr>
+                            <th>#</th>                            
+                            <th class="no-sort">Folio</th>
+                            <th>Acciones</th>
+                            <th>Emision</th>
+                            <th>Paciente</th> 
+                            <th>Referencia</th>       
+                            <th>Doctor</th>                                  
+                            <th class="no-sort"> Estatus</th>  
+                            <th class="no-sort">Subtotal</th>
+                            <th class="no-sort">Impuesto</th>
+                            <th class="no-sort">Total</th>
+                            <th class="no-sort">Pago</th>
+                            <th class="no-sort">Saldo</th>
+                            <th class="no-sort">Situacion</th>                  
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let u of solicitudlst; let i = index">  
+                            <td>{{i+1}}</td>                              
+                            <td>{{u.Folio}}</td>
+                            <td> <!--<div class="text-black-50 text-right" >{{u.Folio}}</div> -->
+                                <div class="ibox-tools">
+                                        <a class="dropdown-toggle" data-toggle="dropdown"><i class="ti-more-alt"></i></a>							
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item">{{u.Folio}}</a>
+                                        <a class="dropdown-item" (click)="mk_savecancelacion(u.VentaID,u.Folio)"> <i class="ti-layers-alt"></i>Reutilizar Folio</a> 
+                                        <a class="dropdown-item" > <i class="ti-minus"></i>-----</a> 
+                                        <a class="dropdown-item" routerLink="/comprobante/{{u.VentaID}}" > <i class="ti-printer"></i>Comprobante</a>
+                                        <a class="dropdown-item" routerLink="/selmuestra/{{u.VentaID}}"> <i class="ti-eraser"></i>Imp. Etiquetas</a>
+                                        <a class="dropdown-item" routerLink="/selrecip/{{u.VentaID}}"> <i class="ti-tag"></i>Consumo Mat.</a>
+                                        <a class="dropdown-item" routerLink="/resultado/{{u.VentaID}}"> <i class="ti-pencil-alt"></i>Cap.Resultados</a>
+                                        <a class="dropdown-item"> <i class="ti-save"></i>Archivar</a>
+                                    </div>
+                                </div>
+                            </td>                             
+                            <td><h6>{{u.FechaEmision | date:formatofecha}}</h6></td>
+                            <td><h6>{{u.nombrecontacto}}</h6></td>  
+                            <td><h6>{{u.Referencia}}</h6></td>  
+                            <td>{{u.nombredoctor}}</td> 
+                            <td>
+                                <a data-toggle="modal" data-target="#modal_formapago" (click)="mk_iniciarModal(u)" >
+                                    <span [ngClass]="mk_getBottonClass(u.Estatus)">{{u.Estatus}}</span>
+                                </a>
+
+                            </td>
+                            <td class="text-right">{{u.Importe | currency }}</td> 
+                            <td class="text-right">{{u.Impuestos | currency }}</td> 
+                            <td class="text-right">{{u.Total | currency }}</td> 
+                            <td class="text-right">{{u.Anticipo | currency }}</td> 
+                            <td class="text-right text-blue">{{u.Saldo | currency }}</td> 
+                            <td>                           
+                                    <span [ngClass]="mk_getBottonClass(u.WFEstado)">{{u.WFEstado}}</span>                             
+
+                            </td>                                          
+
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+        </div>
+    </div>
+</div>
+

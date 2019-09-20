@@ -1,0 +1,62 @@
+<div class="page-heading">
+    <h1 class="page-title">{{title}}</h1>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a routerLink="/index"><i class="la la-home font-20"></i></a>
+        </li>        
+    </ol>
+</div>
+<div class="page-content fade-in-up">
+    <div class="ibox">
+        <div class="ibox-body">
+            <div>
+                <button class="btn btn-success btn-icon-only btn-circle btn-sm btn-air" ><i class="la la-plus" routerLink="/upresultadoedit/0"></i></button>
+            </div>
+            
+            <div class="flexbox mb-4">
+                <div class="flexbox">
+                    <label class="mb-0 mr-2">Type:</label>
+                    <select class="selectpicker show-tick form-control" id="type-filter" title="Please select" data-style="btn-solid" data-width="150px">
+                        <option value="">All</option>
+                        <option>ACTIVO</option>
+                        <option>CONCLUIDO</option>
+                    </select>
+                </div>
+                <div class="input-group-icon input-group-icon-left mr-3">
+                    <span class="input-icon input-icon-right font-16"><i class="ti-search"></i></span>
+                    <input class="form-control form-control-rounded form-control-solid" id="key-search" type="text" placeholder="Search ...">
+                </div>
+            </div>
+            <div class="table-responsive row">
+                <table class="table table-bordered table-hover" id="dtbl_upfilelst">
+                    <thead class="thead-default thead-lg">
+                            
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Descripcion</th>
+                            <th>Estatus</th>  
+                            <th>Fecha Alta</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let u of upfilelst; let i = index">                                 
+                            <td>{{u.IDInterno}}</td>
+                            <td>
+                                <h5 class="m-0"><a routerLink="/upresultadoedit/{{u.IDInterno}}">{{u.Nombre}}</a></h5>
+                            </td>
+                            <td>{{u.Descripcion}}</td>  
+                            <td>
+                                <span [ngClass]="mk_getBottonClass(u.Estatus)">{{u.Estatus}}</span>
+                            </td>
+                            <td>{{u.Fecha | date:formatoFecha}}</td> 
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+        </div>
+    </div>
+</div>
+

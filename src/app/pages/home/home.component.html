@@ -1,0 +1,89 @@
+<div class="page-content fade-in-up">
+     <div class="row">
+        <div class="col-xl-4">
+            <div class="ibox ibox-fullheight" style="min-height:480px;">
+                <div class="ibox-head">
+                    <div class="ibox-title">+ VENDIDOS</div>
+                    <div class="ibox-tools">
+                        <a class="font-18" href="javascript:;"><i class="ti-control-record"></i></a>
+                    </div>
+                </div>
+                <div class="ibox-body">
+                    <div class="flexbox mb-3" *ngFor="let u of artlst; let i = index" >
+                        <span class="flexbox">
+                            <span class="btn-icon-only btn-circle bg-primary-50 text-primary mr-3"><i class="ti-cup"></i></span>
+                            <span>{{u.Articulo}} | {{u.Descripcion}}</span>
+                        </span>
+                        <span class="h3 mb-0 text-primary font-strong ml-2">{{u.Cantidad}}</span>
+                    </div>
+                    <!-- <div class="abs-bottom">
+                        <canvas id="chart_1" style="height:220px;"></canvas>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-7">
+            <div class="ibox ibox-fullheight">
+                <div class="ibox-head">
+                    <div class="ibox-title">ULTIMAS ORDENES</div>
+                    <div class="ibox-tools">
+                        <a class="dropdown-toggle" data-toggle="dropdown"><i class="ti-more-alt"></i></a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item"> <i class="ti-pencil"></i>Create</a>
+                            <a class="dropdown-item"> <i class="ti-pencil-alt"></i>Edit</a>
+                            <a class="dropdown-item"> <i class="ti-close"></i>Remove</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="ibox-body">
+                    <div class="flexbox mb-4">
+                        <div class="flexbox">
+                            <span class="flexbox mr-3">
+                                <span class="mr-2 text-muted">Total</span>
+                                <span class="h3 mb-0 text-primary font-strong">{{total | currency}}</span>
+                            </span>
+                            <span class="flexbox">
+                                <span class="mr-2 text-muted">Saldo</span>
+                                <span class="h3 mb-0 text-pink font-strong">{{saldo | currency}}</span>
+                            </span>
+                        </div>
+                        <a class="flexbox" routerLink="/solicitud" routerLinkActive="active">Ver todo<i class="ti-arrow-circle-right ml-2 font-18"></i></a>
+                    </div>
+                    <div class="ibox-fullwidth-block">
+                        <table class="table table-hover">
+                            <thead class="thead-default thead-lg">
+                                <tr>
+                                    <th class="pl-4">Order ID</th>
+                                    <th>Paciente</th>
+                                    <th>Importe</th>
+                                    <th>Impuestos</th>
+                                    <th>Saldo</th>
+                                    <th>Estatus</th>
+                                    <th class="pr-4" style="width:91px;">Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let u of bancolst; let i = index">  
+                                    <td class="pl-4">
+                                        <a routerLink="/index">{{u.Folio}}</a>
+                                    </td>
+                                    <td>{{u.nombrecontacto}}</td>                                    
+                                    <td class="text-right">{{u.Importe | currency}}</td>
+                                    <td class="text-right">{{u.Impuestos | currency}}</td>
+                                    <td class="text-right">{{u.Saldo | currency}}</td>
+                                    <td>
+                                        <span [ngClass]="mk_getBottonClass(u.Estatus)">{{u.Estatus}}</span>
+                                    </td>
+                                    <td class="pr-4">{{u.FechaEmision | date:formatofecha}}</td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

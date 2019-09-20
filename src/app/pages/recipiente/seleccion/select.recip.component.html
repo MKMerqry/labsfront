@@ -1,0 +1,109 @@
+<div class="page-content fade-in-up">
+        <div class="flexbox-b mb-5">
+            <span class="mr-4 static-badge badge-info"><i class="ti-support"></i></span>
+            <div>
+                <h5 class="font-strong">{{title}}</h5>
+                <h5 class="font-strong">Nota {{solicitud[0].Folio}}</h5>
+                <div class="text-light">Paciente: <span class="text-black-50">{{solicitud[0].ContactoNombre}}</span></div>
+                <div class="text-light">Doctor: <span class="text-black-50">{{solicitud[0].nombrepaciente}}</span></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <button class="btn btn-primary btn-rounded btn-block mb-4" (click)="mkgenerarinv()">
+                    <span class="btn-icon"><i class="la la-plus-circle"></i>Generar Consumo de Materiales</span>
+                </button>
+            
+                <div class="text-light"><span class="text-black-50">Detalle Nota {{solicitud[0].Folio}} </span></div>
+                <ul class="list-group list-group-divider faq-tabs" *ngFor="let u of solicitudD; let i = index">
+                    <li class="list-group-item">
+                        <a href="#accordion-3" data-toggle="tab"><i class="badge-point badge-info mr-3"></i>{{u.Articulo}} {{u.Descripcion}}</a>
+                    </li>
+                </ul>
+                <button class="btn btn-primary btn-rounded btn-block mb-4" data-toggle="modal" data-target="#new-question-dialog">
+                        <span class="btn-icon"><i class="la la-plus-circle"></i>Agregar Recipiente</span>
+                </button>            
+    
+                <div class="text-light"><span class="text-black-50">Recipientes agregados </span></div>
+                <ul class="list-group list-group-divider faq-tabs" *ngFor="let u of agregados; let i = index">
+                    <li class="list-group-item">
+                        <a href="#accordion-3" data-toggle="tab"><i class="badge-point badge-info mr-3"></i>{{u.MKCantidad}} - {{u.Articulo}} </a>
+                    </li>
+                </ul>  
+    
+            </div>
+            <div class="col-lg-9">
+                <div class="ibox">
+                    <div class="ibox-body tab-content">
+                        <div class="tab-pane fade active show" id="accordion-1">
+                            <h5 class="font-strong mb-4 text-primary">Movimientos Generados</h5>
+                            <ul class="list-group list-group-divider list-group-full faq-list">
+                                <li class="list-group-item" *ngFor="let u of this.recipientemov; let i = index">
+                                    <a class="font-strong" data-toggle="collapse" href="#faq1-1">{{u.Mov}} {{u.Folio}} {{u.Articulo}} {{u.Cantidad}} </a>
+                                </li>
+                            </ul>                        
+                        </div>             
+                    </div>
+                </div>
+            </div>     
+        </div>
+        <div class="modal fade" id="new-question-dialog" aria-labelledby="new-question-dialog" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <form class="modal-content" id="formarecip" [formGroup]="formarecip">
+                    <div class="modal-header p-4">
+                        <h5 class="modal-title">Agregar Nuevo Recipiente</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="ibox">
+                    <div class="ibox-body">
+                        <div class="form-group mb-4 ">
+                            <label >Recipiente</label>
+                                <select class="form-control form-control-air" name="recipiente" formControlName="recipiente" id="recipiente">
+                                        <option *ngFor="let u of recipientelst" [ngValue]="u.Articulo">{{u.Articulo}}</option>                                       
+                                </select>
+                        </div> 
+                        <div class="form-group mb-4 ">
+                            <div *ngFor="let u of agregados; let i = index">
+                                <a class="text-muted text-center font-16" (click)="mk_quitar(i)"><i class="ti-trash"></i></a>{{u.MKCantidad}} - {{u.Articulo}}                       
+                            </div>  
+                        </div>  
+                        <div class="form-group mb-4 ">
+                            <button class="btn btn-primary btn-rounded mr-3" type="button" (click)='mkagregar()'>Agregar</button>
+                        </div>
+                    </div>
+                    </div>
+    
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+        .faq-list a[data-toggle="collapse"] {
+            display: block;
+            position: relative
+        }
+    
+        .faq-list a[data-toggle="collapse"]:after {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: 'themify';
+            content: "\e61a";
+            speak: none;
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+        }
+    
+        .faq-list a[data-toggle="collapse"][aria-expanded=true]:after {
+            content: "\e622";
+        }
+    </style>
+    

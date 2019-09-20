@@ -1,0 +1,77 @@
+<div class="ibox">
+    <div class="ibox-head " *ngFor="let u of agregados; let i = index">
+            <tbody class="verticalText" >  
+                <th >
+                    <tr> ..  </tr>     
+                    <tr> ..  </tr>                                                 <!-- :'CEN25', :'06 Agosto 2019', :'21:02 PM', edad:36, name:'Fernando Flores Tapia', codigo:'QUO158', cod1:'60011', cod2:'SM30', cod3:'Tubo-Rojo'                             -->
+                    <tr>
+                        <th class="text-right"><small>{{agregados[i]}}</small></th>
+                    </tr> 
+                    <tr> ..  </tr>  
+                    <tr> ..  </tr>    
+                </th>
+            </tbody>
+
+
+            <!-- <tr  class="">
+                <th class="text-left "><small>Edad: {{edad}}</small></th><th colspan="2"class="text-right "><small>{{paciente}}</small></th>
+            </tr>
+            <tr  class="">
+                <th colspan="3"class="text-center font-13 "><ngx-barcode [bc-value]="soli" [bc-display-value]="false" [bc-font-size]="8" [bc-width]="width" [bc-height]="height" ></ngx-barcode></th>
+            </tr>                     
+            <tr  class="">
+                <th class="text-left "><small>{{fecha}} {{hora}}</small></th><th class="text-center "></th><th class="text-right "><small>{{agregados[i]}}</small></th>
+            </tr>
+        </th> -->
+
+
+            <!-- <tbody class="verticalText" *ngFor="let u of agregados; let i = index">                                                   
+                <tr class="border " >
+                    <th  class="">
+                        <tr  class="">
+                            <th class="text-left "><small>Edad: {{edad}}</small></th><th colspan="2"class="text-right "><small>{{paciente}}</small></th>
+                        </tr>
+                         <tr>
+                            <th colspan="3" class="text-left "><small></small></th>
+                        </tr> 
+                        <tr  class="">
+                            <th colspan="3"class="text-center font-13 "><ngx-barcode [bc-value]="soli" [bc-display-value]="false" [bc-font-size]="8" [bc-width]="width" [bc-height]="height" ></ngx-barcode></th>
+                        </tr>                     
+                        <tr  class="">
+                            <th class="text-left "><small>{{fecha}} {{hora}}</small></th><th class="text-center "></th><th class="text-right "><small>{{agregados[i]}}</small></th>
+                        </tr>
+                    </th>
+                </tr>  
+            </tbody> -->
+
+    </div>
+    <div class="ibox-body">
+
+            <div class="form-group text-center">
+
+                    <button class="btn btn-outline-primary btn-fix btn-thick noprint">
+                            <a routerLink="/selmuestra/{{mkid}}"> <span class="btn-icon"><i class="ti-home" ></i>Regresar</span></a>
+                        </button>
+                    <!-- [disabled]="!impreso" -->
+                    <button class="btn btn-outline-primary btn-fix btn-thick noprint" (click)="mk_imprimir()" >
+                        <span class="btn-icon"><i class="ti-printer" ></i>Imprimir</span>
+                    </button>
+        
+                </div>
+
+    </div>
+</div>
+<style> 
+.verticalText {
+writing-mode: vertical-lr;
+transform: rotate(90deg);
+}
+    @media print { 
+        .noprint { 
+            visibility: hidden; 
+        } 
+        @page { margin: 0;
+        size: auto; 
+        }           
+    }
+</style>

@@ -1,0 +1,87 @@
+  <!-- START PAGE CONTENT-->
+  <div class="page-heading">
+    <h1 class="page-title">{{title}}</h1>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a routerLink="/index"><i class="la la-home font-20"></i></a>
+        </li>        
+    </ol>
+</div>
+<div class="page-content fade-in-up">
+    <div class="ibox">
+        <div class="ibox-head">
+            <div class="ibox-title">Proceso de entrega</div>
+        </div>
+        <div class="ibox-body">
+            <form id="form-wizard" action="javascript:;" novalidate="novalidate">
+                <h6>Step 1</h6>
+                    <section>
+                        <h3>Imprimir Consumo de Materiales</h3>
+                    </section>
+                <h6>Step 2</h6>
+                    <section>
+                        <h3>Imprimir Etiquetas</h3>
+                    </section>
+                <h6>Step 3</h6>
+                    <section>
+                        <h3>Generar Movimiento Inventario</h3>
+                    </section>
+                <h6>Step 4</h6>
+                    <section>
+                        <h3>Captura de Resultados</h3>
+                        <div class="ibox">
+                            <div class="ibox-head">
+                                <div class="ibox-title">Tabla de Resultados</div>
+                                <div class="text-monospace">Paciente: Fernando Flores</div>
+                            </div>
+                            <div class="ibox-body">
+                                <table class="table table-condensed">
+                                    <thead>
+                                        <tr>                                            
+                                            <th>Estudio</th>
+                                            <th></th>
+                                            <th>Resultado</th>
+                                            <th>Limites Ref</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>                                            
+                                            <td>ACIDO FOLICO</td>
+                                            <td><i class="ti-check text-success"></i></td>
+                                            <td> <input type="text" style="WIDTH: 65px; HEIGHT: 25px" value="5"></td>
+                                            <td>3.1 - 20.5 ng/mL</td>
+                                        </tr>
+                                        <tr>
+                                            <td>TSH-U</td>
+                                            <td><i class="ti-info-alt text-warning"></i></td>
+                                            <td> <input type="text" style="WIDTH: 65px; HEIGHT: 25px"  value="5"> </td>
+                                            <td> 0.4 - 4 µUI/mL</td>
+                                        </tr>
+                                        <tr>
+                                            <td>T3 CAPTACION.</td>
+                                            <td><i class="ti-info-alt text-warning"></i></td>
+                                            <td> <input type="text" style="WIDTH: 65px; HEIGHT: 25px"  value="5"> </td>
+                                            <td> 29 - 39 %</td>
+                                        </tr>      
+                                        <tr>
+                                                <td>ANTICUERPOS ANTI DNA-DS NATIVO</td>
+                                                <td><i class="ti-info-alt text-success"></i></td>
+                                                <td> <input type="text" style="WIDTH: 65px; HEIGHT: 25px"  value="5"> </td>
+                                                <td> 0.0 - 20.0 %</td>
+                                            </tr>                                                                             
+                                        
+                                        <!-- <td></i></td> -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                <h6>Step 5</h6>
+                    <section>
+                        <h3>Captura de Resultados</h3>
+                    </section>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- END PAGE CONTENT-->

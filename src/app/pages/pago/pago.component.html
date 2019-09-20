@@ -1,0 +1,176 @@
+<div class="page-content fade-in-up">
+
+        <div class="ibox">
+                <div class="ibox-body"> 
+                    <form class="form-inline form-success mb-4" id="formapago" [formGroup]="formapago">
+                        <div class="col-sm-3 form-group mb-4" >
+                            <select class="form-control mb-2 mr-sm-2 mb-sm-0" formControlName="formapago" >  
+                                    <option value="" disabled selected>Foma Pago</option>                            
+                                    <option *ngFor="let u of formapagcoblst" [ngValue]="u.FormaPagoCobro">{{u.FormaPagoCobro}}</option>                                       
+                            </select>
+                        </div>
+                        <div class="col-sm-3 form-group mb-4" >   
+                                <input class="form-control mb-2 mr-sm-2 mb-sm-0" type="number" formControlName="importe" placeholder="Importe">                                     
+                            </div>
+                        <div class="col-sm-3 form-group mb-4" >
+                            <input class="form-control  mb-2 mr-sm-2 mb-sm-0" type="text" placeholder="Referencia" formControlName="referencia">
+                        </div>
+                        <button class="btn btn-primary btn-rounded" (click)="mk_agregarforma()" >Agregar</button>     
+                    </form>
+                    
+                    <div *ngFor="let u of detallepago; let i = index">
+                        <div class="font-13"><a class="text-muted font-16" (click)="mk_quitar(i)"><i class="ti-trash"></i></a> {{u.importe}} <b>{{u.formapago}}</b> {{u.referencia}}</div>                        
+                    </div>
+                </div>
+            </div>
+        <div class="row">
+            <div class="col-xl-9">
+                <div class="ibox">
+                    <div class="ibox-head" [formGroup]="formobservaciones">
+                            <div class="d-flex justify-content-end">
+                                <div class="text-right" style="width:300px;">
+                                    <div class="row mb-2">
+                                        <div class="col-6">Importe</div>
+                                        <div class="col-6">{{notaimporte | currency}}</div>
+                                    </div>                                    
+                                    <div class="row mb-2">
+                                        <div class="col-6">Descuento Global:</div>
+                                  
+                                        <div class="col-6">
+                                            <input class="text-right" type="number" formControlName="descuentopct" min="0" max="99" size="30">
+                                        </div>
+                             
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-6">Subtotal</div>
+                                        <div class="col-6">{{notasubtotal | currency}}</div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-6">Impuestos</div>
+                                        <div class="col-6">{{notaimpuesto | currency}}</div>
+                                    </div>                                    
+
+                                    <div class="row font-strong font-20">
+                                        <div class="col-6">Total:</div>
+                                        <div class="col-6" >
+                                            <div class="h3 font-strong">{{notatotal | currency}}</div>
+                                        </div>
+                                    </div>
+                                
+                                </div>
+                                
+                            </div>
+                            <div class="col-sm-3 form-group mb-4"  >
+                                <label>Observaciones</label>
+                                <textarea class="form-control" rows="3" formControlName="observaciones"></textarea>
+                            </div>
+                            <div>
+
+                            </div>
+                            <div class="flexbox mb-3 text-right">
+                                    <button class="btn btn-primary btn-rounded" (click)="mk_generarmov()" >Generar Nota</button> 
+                            </div> 
+                        </div>
+                    <div class="ibox-body">
+                        <!-- <h5 class="font-strong mb-5">Lista de Productos </h5> -->
+                        <div [formGroup]="formartdetalles">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-default thead-lg">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Estudio</th>
+                                    <th>Precio</th>                                                                   
+                                    <th>Cant</th>
+                                    <th>Precio Cant</th>
+                                    <!-- <th>Desc %</th> -->
+                                    <!-- <th>Precio Desc</th> -->
+                                    <th>Precio IVA</th>
+                                </tr>
+                            </thead>
+                            <tbody formArrayName="mkarticulos">
+                                <tr *ngFor="let item of getartdetalle(); let i = index;" [formGroupName]="i">  
+                                    <td>{{i+1}}</td>
+                                    <td>                                        
+                                        {{item.value.Articulo}} - {{item.value.Descripcion}} </td>
+                                    <td class="text-right">{{item.value.PrecioBruto | currency}}</td>
+                                    <td class="text-center">{{item.value.MKCantidad}}</td>
+                                    <td class="text-right">{{(item.value.PrecioBruto*item.value.MKCantidad) | currency}}</td>
+                                    <!-- <th class="text-right"><input class="text-right" type="number" formControlName="MKDescuento" min="0" max="99"></th> -->
+                                    <!-- <td class="text-right">{{  (item.value.PrecioBruto*item.value.MKCantidad)-((item.value.PrecioBruto*item.value.MKCantidad)*((item.value.MKDescuento )/100.0)) | currency}}</td>   -->
+                                    <td class="text-right">{{ ((item.value.PrecioBruto*item.value.MKCantidad)-((item.value.PrecioBruto*item.value.MKCantidad)*((item.value.MKDescuento )/100.0)))+(((item.value.PrecioBruto*item.value.MKCantidad)-((item.value.PrecioBruto*item.value.MKCantidad)*((item.value.MKDescuento )/100.0)))*(item.value.Impuesto1/100.00)) | currency}} </td>
+
+                                    
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3">
+                <div class="ibox">
+                    <div class="ibox-body">
+                            <!-- <h5 class="font-strong mb-4">Tipo de Cambio: {{tipocambio | currency}}</h5> -->
+                            <table class="table table-bordered table-hover">
+                                    <thead class="thead-default thead-lg">
+                                        <tr>
+                                            <th><div class="col-4">#</div></th>
+                                            <th><div class="text-right">Pesos</div></th>
+                                            <th class="text-right">Dolares TC:{{tipocambio | currency}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr> 
+                                            <td>
+                                                <div class="text-light text-left">Total</div>
+                                            </td>
+                                            <td>
+                                                <div class="font-strong text-right">
+                                                    {{notatotal | currency}}                                                    
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="font-strong text-muted text-right">
+                                                    {{totaldolares | currency}}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr> 
+                                                <td>
+                                                    <div class="text-light text-left">Anticipo</div>
+                                                </td>
+                                                <td>
+                                                    <div class="font-strong text-right">
+                                                        {{anticipo | currency}}                                                    
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="font-strong text-muted text-right">
+                                                        {{anticipodolares | currency}} 
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr> 
+                                                    <td>
+                                                        <div class="text-light text-left">{{cambio}}</div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="font-strong text-right">
+                                                            {{resta | currency}}                                                    
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="font-strong text-muted text-right">
+                                                            {{restadolares | currency}}
+                                                        </div>
+                                                    </td>
+                                                </tr>                                                                                    
+                                    </tbody>
+                                </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    

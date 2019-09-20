@@ -1,0 +1,66 @@
+<div class="page-heading">
+    <h1 class="page-title">{{title}}</h1>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a routerLink="/index"><i class="la la-home font-20"></i></a>
+        </li>
+        <li class="breadcrumb-item">
+            <a routerLink="/paciente/list">pacientes</a>
+        </li>
+
+    </ol>
+</div>
+<div class="page-content fade-in-up">
+    <div class="ibox">
+        <div class="ibox-head">
+            <div class="mt-4 mb-4">
+                <button class="btn btn-outline-info btn-icon-only btn-circle btn-sm btn-thick"><i class="la la-bars" routerLink="/paciente/list"></i></button>
+                <button class="btn btn-outline-info btn-icon-only btn-circle btn-sm btn-thick" (click)="mk_save()"><i class="la la-save"></i></button>
+            </div>
+        </div>
+   
+
+    <div class="ibox-body">
+        <form class="form-info" id="pacienteforma" [formGroup]="pacienteforma">
+            <div class="row">
+                <div class="col-sm-3 form-group mb-4">
+                    <label>Contacto</label>
+                    <input Class="form-control form-control-air" type="text" name="contacto" placeholder="Contacto" formControlName="contacto" [attr.disabled]="mkEditar?'':null">
+                </div>
+                <div class="col-sm-3 form-group mb-4">
+                    <label>Nombre</label>
+                    <input Class="form-control form-control-air" type="text" name="nombre" placeholder="Nombre" formControlName="nombre" >
+                </div>
+                <div class="col-sm-3 form-group mb-4">
+                    <label>A.Paterno</label>
+                    <input Class="form-control form-control-air" type="text" name="paterno" placeholder="Paterno" formControlName="paterno" >
+                </div>
+                <div class="col-sm-3 form-group mb-4">
+                    <label>A.Materno</label>
+                    <input Class="form-control form-control-air" type="text" name="materno" placeholder="Materno" formControlName="materno" >
+                </div>  
+                <div class="col-sm-3 form-group mb-4">
+                    <label>Fecha Nacimiento</label>
+                     <input class="form-control form-control-air" type="date"  name="nacimiento" placeholder="F. Nacimiento" formControlName="nacimiento" > 
+
+                </div>
+                <div class="col-sm-3 form-group mb-4">
+                    <label>Edad</label>
+                    <input class="form-control form-control-air" type="number" min="0" max="100" name="edad" placeholder="Edad" formControlName="edad" [attr.disabled]="mkEditar?'':null" >
+                </div>
+                <div class="col-sm-3 form-group mb-4">
+                    <label>Sexo</label>
+                    <select class="form-control form-control-air" name="sexo" placeholder="Sexo" formControlName="sexo">
+                        <option value="Hombre">Hombre</option> 
+                        <option value="Mujer">Mujer</option>                                        
+                    </select>
+                </div>
+                <div class="col-sm-3 form-group mb-4">
+                    <label>E-mail</label>
+                    <input class="form-control form-control-air" type="text" name="correo" placeholder="E-mail" formControlName="correo" >
+                </div>                                
+            </div>
+        </form>
+    </div>
+</div>
+</div>

@@ -1,0 +1,237 @@
+
+<!-- SESSION EDITAR ACTIVIDAD -->
+<div class="modal fade" id="modal_autoriza">
+        <div class="modal-dialog" style="width:400px;" role="document">
+            <div class="modal-content timeout-modal">
+                <div class="modal-body">
+                    <button class="close" data-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center h4 mb-3">Autorización</div>
+                    <br>
+                     <div id="timeout-activate-box">
+                        <form class="form-horizontal" id="autorizaform"  [formGroup]="autorizaform" >
+                            <div class="ibox-body">
+    
+                                <div class="form-group mb-4 row">
+                                    <label class="col-sm-2 col-form-label">Usuario</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control form-control-air" type="text" name="usuario" placeholder="Usuario" formControlName="usuario" >
+                                    </div>
+                                </div>
+                                <div class="form-group mb-4 row">
+                                    <label class="col-sm-2 col-form-label">Contraseña</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control form-control-air" type="password" name="contrasena" placeholder="Contraseña" formControlName="contrasena" >
+                                    </div>
+                                </div>                                 
+                                <div class="form-group text-center">
+                                    <button class="btn btn-outline-success btn-fix btn-thick" (click)="mk_autoriza()">
+                                        <span class="btn-icon"><i class="ti-save"></i>Autorizar</span>
+                                    </button>
+                                </div>     
+                            </div>                        
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END EDITAR ACTIVIDAD MODAL -->
+
+
+
+<div class="page-content fade-in-up" id="MKprint">
+        <div class="flexbox-b mb-5">
+            <span class="mr-4 static-badge badge-info"><i class="ti-support"></i></span>
+            <div>
+                <h5 class="font-strong">{{title}}</h5>
+                <h5 class="font-strong">Nota: {{folio}}</h5>
+                <h5 class="font-strong">Paciente: {{ContactoNombre}}</h5>
+                <h5 class="font-strong">Doctor: {{vendedornombre}}</h5>
+                <h5 class="font-strong">Estatus: {{Estatus}}</h5>
+                <h5 class="font-strong">{{autorizado}}</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <button class="btn btn-primary btn-rounded mb-4" data-toggle="modal" data-target="#modal_autoriza">
+                    <span class="btn-icon"><i class="la la-plus-circle"></i>Validar Resultados</span>
+                </button>            
+                <div class="text-light"><span class="text-black-50">Detalle Nota {{folio}} </span></div>
+                <ul class="list-group list-group-divider faq-tabs" *ngFor="let u of solicitudD; let i = index">
+                    <li class="list-group-item">
+                        <a href="#accordion-3" data-toggle="tab"><i class="badge-point badge-info mr-3"></i>{{u.Articulo}} {{u.Descripcion}}</a>
+                    </li>
+                </ul>    
+            <!-- </div>
+            <div class="col-lg-3"> -->
+            <!-- <form class="form-info" id="forma-evento" [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+                <div class="col-sm-9 form-group mb-4">
+                    <label>Archivo</label>
+                    <div class="col-xs-9">
+                        <input class="form-control form-control-air" type="file" name="file"  id="file" accept="text/plain" 
+                        placeholder="Archivo" formControlName="file"
+                        (change)="onFileSelect($event)"  >                                  
+                         [attr.disabled]="mkEditar?'':null"> 
+                    </div>
+                </div>
+            
+                <button class="btn btn-primary btn-rounded mb-4"  type="submit" >
+                    <span class="btn-icon"><i class="la la-plus-circle"></i>Subir Archivo</span>
+                </button>
+                <div class="text-light"><span class="text-black-50">Archivos Nota {{folio}} </span></div>
+                <ul class="list-group list-group-divider faq-tabs" *ngFor="let u of link; let i = index">
+                    <li class="list-group-item">
+                        <div>
+                            <tr>
+                                <td><a class="text-muted text-center font-16" (click)="mk_quitarfile(i)"><i class="ti-trash"></i></a></td>
+                                <td><i class="badge-point badge-info mr-3"></i>{{u.Nombre}} </td>
+                            </tr>                            
+                                      
+                        </div>  
+                    </li>
+                </ul> 
+
+        </form> -->
+    </div>
+            <div class="col-lg-9">
+
+                <div class="ibox" >
+                    <div class="ibox-body tab-content">
+                        <div class="tab-pane fade active show" id="accordion-1">
+                            <div class="ibox">
+                                <div class="ibox-head">
+                                    <div class="ibox-title">Tabla de Resultados</div>
+                                </div>
+                                <div class="ibox-body">
+                                    <div class="form-group text-center">
+                                        <button class="btn btn-outline-primary btn-fix btn-thick" (click)="mkGuardar()">
+                                            <span class="btn-icon"><i class="ti-save"></i>Guardar</span>
+                                        </button>
+                                        <button class="btn btn-outline-primary btn-fix btn-thick"(click)="mkImprimir()">
+                                            <span class="btn-icon"><i class="ti-printer" ></i>Version para Imprimir</span>
+                                        </button>
+                                        <button class="btn btn-outline-primary btn-fix btn-thick" (click)="mkEnviar()">
+                                            <span class="btn-icon"><i class="ti-email"></i>Enviar</span>
+                                        </button>                                        
+                                    </div>
+                                   <div [formGroup]="formres">
+                                    <table class="table table-striped table-head-purple mb-5">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Descripcion</th>
+                                                <!-- <th>...</th> -->
+                                                <th>Valor</th>
+                                                <th>ValorMinimo</th>
+                                                <th>ValorMaximo</th>
+                                                <th>ValorText</th>
+                                                <th>Unidad</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody formArrayName="mkres">
+                                            <tr *ngFor="let item of getControls(); let i = index;" [formGroupName]="i">
+                                                    <th> {{ item.value.Orden }} </th>
+                                                    <th> {{ item.value.descripcion }} </th>
+                                                    <!-- <th><i [ngClass]="mk_getBottonClass(item.value.ValorMinimo,item.value.ValorCapturado,item.value.ValorMaximo)"></i></th>                                                     -->
+                                                    <th><input type="text" formControlName="ValorCapturado" [ngClass]="mk_getBottonClass(item.value.ValorMinimo,item.value.ValorCapturado,item.value.ValorMaximo)"></th>
+                                                    <th> {{ item.value.ValorMinimo }}</th>
+                                                    <th> {{ item.value.ValorMaximo }}</th>
+                                                    <th> {{ item.value.ValorText }}</th>
+                                                    <th> {{ item.value.Unidad }}</th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                </div>
+                            </div>                     
+                        </div>             
+                    </div>
+                </div>
+                <!-- <div class="ibox" >
+                        <div class="ibox-body tab-content">
+                            <div class="tab-pane fade active show" id="accordion-1">
+                                <div class="ibox">
+                                    <div class="ibox-head">
+                                        <div class="ibox-title">Tabla de Resultados Archivo</div>
+                                    </div>
+                                    <div class="ibox-body">
+                                        <table class="table table-striped table-head-purple mb-5">
+                                            <thead>
+                                                <tr>
+                                                    <th>...</th>
+                                                    <th>...</th>
+                                                    <th>...</th>
+                                                    <th>...</th>
+                                                    <th>...</th>
+                                                    <th>...</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody >
+                                                <tr *ngFor="let u of linkd; let i = index">
+                                                        <th> {{ u.mk_0 }} </th>
+                                                        <th> {{ u.mk_1 }} </th>  
+                                                        <th> {{ u.mk_2  }}</th>
+                                                        <th> {{ u.mk_3  }}</th>
+                                                        <th> {{ u.mk_4  }}</th>
+                                                        <th> {{ u.mk_5  }}</th>
+                                                </tr>
+                                            </tbody>
+                                        </table>                                  
+                                    </div>
+                                </div>                     
+                            </div>             
+                        </div>
+                    </div> -->
+
+
+            </div>    
+
+            
+
+
+       
+
+        </div>
+        <!-- <pre>{{formres.value | json}}</pre> -->
+        <div class="modal fade" id="new-question-dialog" aria-labelledby="new-question-dialog" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <form class="modal-content" id="formarecip" [formGroup]="formarecip">
+                    <div class="modal-header p-4">
+                        <h5 class="modal-title">Agregar Nuevo Recipiente</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="ibox">
+                    <div class="ibox-body">
+                        <div class="form-group mb-4 ">
+                            <label >Recipiente</label>
+                                <select class="form-control form-control-air" name="recipiente" formControlName="recipiente" id="recipiente">
+                                        <option *ngFor="let u of recipientelst" [ngValue]="u.Articulo">{{u.Articulo}}</option>                                       
+                                </select>
+                        </div> 
+                        <div class="form-group mb-4 ">
+                            <div *ngFor="let u of agregados; let i = index">
+                                <a class="text-muted text-center font-16" (click)="mk_quitar(i)"><i class="ti-trash"></i></a>{{u.MKCantidad}} - {{u.Articulo}}                       
+                            </div>  
+                        </div>  
+                        <div class="form-group mb-4 ">
+                            <button class="btn btn-primary btn-rounded mr-3" type="button">Agregar</button>
+                        </div>
+                    </div>
+                    </div>
+    
+                </form>
+            </div>
+        </div>
+    </div>
+   
+    <style>
+        .cuidado {
+            background-color: #FF0000
+        }
+        .ok {
+            background-color: rgb(248, 244, 244)
+        }        
+    </style>
+ 

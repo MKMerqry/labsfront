@@ -1,0 +1,218 @@
+<div class="page-heading">
+        <h1 class="page-title">{{title}}</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="index.html"><i class="la la-home font-20"></i></a>
+            </li>            
+        </ol>
+    </div>
+    <div class="page-content fade-in-up" >
+        <div class="ibox">
+                <div class="ibox-body">
+                    <form class="form-inline"  [formGroup]="formsolicitud" >
+                        <div class="col-sm-3 form-group" >
+                            <label >Tipo</label>
+                            <select class="form-control" formControlName="tipoNom" >  
+                                <option value="" disabled selected>Tipo</option>  
+                                <option *ngFor="let u of tipoNomlis" [ngValue]="u">{{u}}</option>                                        
+                            </select>
+                        </div>
+                        <div class="col-sm-3 form-group" >  
+                            <label >Paciente</label>                                      
+                            <select class="form-control" id="paciente" name="paciente" formControlName="paciente" (change)="onChange($event.target.value)" >  
+                                <option value="" disabled selected>Paciente</option>   
+                                <option value="nuevo" >Agregar nuevo</option>                      
+                                <option *ngFor="let u of pacientelst" [ngValue]="u.Contacto">{{u.MKNombre}}</option>
+                            </select> 
+                        </div>
+                        <div class="col-sm-3 form-group" >
+                            <label >Corporativo</label>
+                            <select class="form-control" id="corporativo" name="corporativo" formControlName="corporativo" >  
+                                <option value="" disabled selected>Corporativo</option>                        
+                                <option *ngFor="let u of pacientelst" [ngValue]="u.Contacto">{{u.MKNombre}}</option>
+                            </select> 
+                        </div>
+                        <div class="col-sm-3 form-group" >
+                            <label >Doctor</label>
+                            <select class="form-control" name="doctor" formControlName="doctor" >  
+                                <option value="" disabled selected>Doctor</option>                        
+                                <option *ngFor="let u of doclst" [ngValue]="u.Contacto">{{u.MKNombre}}</option>
+                            </select>  
+                        </div>                    
+
+                    </form>
+                    <div *ngIf="showfolio" class="font-13">                             
+                        <a class="text-muted font-13" (click)="mk_quitarfolio()">
+                            <i class="ti-trash"></i>
+                        </a> Folio Reciclado:  
+                        <b>{{folionew}}</b>
+                    </div> 
+                </div>
+        </div>
+      
+        <div class="row">
+            <div class="col-md-6"> 
+                <div class="ibox">
+                     <div class="ibox-head">
+                            <!-- <div class="flexbox mb-4"> -->
+                                    <div class="flexbox">
+                                        <label class="mb-0 mr-2">Encuesta:</label>
+                                        <select class="selectpicker show-tick form-control" formControlName="concepto" id="mktype-filter" title="Please select" data-style="btn-solid" data-width="150px" (change)="onChangeEncuenta($event.target.value)" >
+                                                <option value="ANUNCIO AFUERA">ANUNCIO AFUERA</option>
+                                                <option value="CONOCIDO">CONOCIDO</option>
+                                                <option value="INTERNET">INTERNET</option>
+                                                <option value="LO RECOMENDARON">LO RECOMENDARON</option>
+                                                <option value="MEDICO">MEDICO</option>
+                                                <option value="OTRO">OTRO</option>
+                                                <option value="PERIODICO">PERIODICO</option>
+                                                <option value="RADIO">RADIO</option>
+                                                <option value="TELEVISION">TELEVISION</option>
+                                                <option value="TV AZTECA">TV AZTECA</option>
+                                                <option value="TV TELEVISA">TV TELEVISA</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-group-icon input-group-icon-left mr-3">
+                                        <span class="input-icon input-icon-right font-16"><i class="ti-search"></i></span>
+                                        <input class="form-control form-control-rounded form-control-solid" id="key-search" type="text" placeholder="Search ...">
+                                        
+                                    </div>
+                    </div> 
+                    <div class="ibox-body">
+                            <div class="table-responsive row">
+                                    <table class="table table-bordered table-hover" id="products-table">
+                                        <thead class="thead-default thead-lg">
+                                            <tr>
+                                                <th class="no-sort">#</th> 
+                                                <th>Estudios</th>
+                                                <th>Precio</th>                         
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let u of artlst; let i = index">  
+                                                <td>
+                                                    <a class="text-muted font-16" (click)="mk_add(u.Articulo)"><i class="ti-shopping-cart"></i></a>
+                                                </td>
+                                                <td class="text-left">( {{u.Articulo}} ) - {{u.Descripcion}} </td>                             
+                                                <td class="m-0 text-right">{{u.PrecioNeto | currency}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6"> 
+                <div class="ibox">
+                     <div class="ibox-head">
+                        <div class="ibox-title">
+                            <!-- <div class="flexbox mb-3"> -->
+                                <span class="h3 mb-0 text-primary font-strong ml-2 text-right">TOTAL : {{total | currency}}        .</span>
+                                <button class="btn btn-primary btn-rounded" (click)="mk_pagar()" >Pagar</button> 
+                            <!-- </div>  -->
+                        </div>
+                    </div> 
+                    <div class="ibox-body">
+                            <div class="table-responsive row">
+                                    <table class="table table-bordered table-hover" id="tlbcomprados">
+                                        <thead class="thead-default thead-lg">
+                                            <tr>
+                                                <th class="no-sort">#</th> 
+                                                <th>Producto</th>
+                                                <th>Cant</th>
+                                                <th>Precio</th>                         
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let u of detalle; let i = index">  
+                                                <td> 
+                                                    <a class="text-muted font-16" (click)="mk_quitar(i)"><i class="ti-trash"></i></a>
+                                                 </td>
+                                                <td class="text-left">( {{u.Articulo}} ) - {{u.Descripcion}} </td>  
+                                                <td class="text-center">{{u.MKCantidad}}</td>
+                                                <td class="text-right">{{u.pxcNeto | currency}}</td>
+                                        </tr>
+                                    </tbody>
+                            </table>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div> 
+    <!-- END PAGE CONTENT-->
+
+
+    <!-- <pre>{{formsolicitud.value | json}}</pre> -->
+<!-- SESSION EDITAR ACTIVIDAD -->
+<div class="modal fade" id="modal_pacientenew">
+    <div class="modal-dialog" style="width:400px;" role="document">
+        <div class="modal-content timeout-modal">
+            <div class="modal-body">
+                <button class="close" data-dismiss="modal" aria-label="Close"></button>
+                <div class="text-center h4 mb-3">Paciente Nuevo</div>
+                <br>
+                 <div id="timeout-activate-box">
+                    <form class="form-horizontal" id="formapago"  [formGroup]="pacienteforma" >
+                        <div class="ibox-body">
+
+                            <div class="form-group mb-4 row">
+                                <label class="col-sm-2 col-form-label">Nombre</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control form-control-air" type="text" name="nombre" formControlName="nombre" >
+                                </div>
+                            </div>
+                            <div class="form-group mb-4 row">
+                                <label class="col-sm-2 col-form-label">Paterno</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control form-control-air" type="text" name="paterno" formControlName="paterno" >
+                                </div>
+                            </div> 
+                            <div class="form-group mb-4 row">
+                                <label class="col-sm-2 col-form-label">Materno</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control form-control-air" type="text" name="materno" formControlName="materno" >
+                                </div>
+                            </div> 
+                            <div class="form-group mb-4 row">
+                                <label class="col-sm-2 col-form-label">Nacimiento</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control form-control-air" type="date" name="nacimiento" formControlName="nacimiento"  >
+                                </div>
+                            </div>                             
+                            <div class="form-group mb-4 row">
+                                <label class="col-sm-2 col-form-label">Edad</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control form-control-air" type="number" name="edad" formControlName="edad" [attr.disabled]="true" >
+                                </div>
+                            </div>     
+                            <div class="form-group mb-4 row">
+                                <label class="col-sm-2 col-form-label">Sexo</label>
+                                <div class="col-sm-10">                                    
+                                    <select class="form-control form-control-air" name="sexo"  formControlName="sexo">
+                                        <option value="Hombre">Hombre</option> 
+                                        <option value="Mujer">Mujer</option>                                        
+                                    </select>
+                                </div>
+                            </div>   
+                            <div class="form-group mb-4 row">
+                                <label class="col-sm-2 col-form-label">Correo</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control form-control-air" type="text" name="correo" formControlName="correo" >
+                                </div>
+                            </div> 
+                            <div class="form-group text-center">
+                                <button class="btn btn-outline-success btn-fix btn-thick" (click)="mk_guardarpaciente()">
+                                    <span class="btn-icon"><i class="ti-save"></i>Guardar</span>
+                                </button>
+                            </div>     
+                        </div>                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END EDITAR ACTIVIDAD MODAL -->

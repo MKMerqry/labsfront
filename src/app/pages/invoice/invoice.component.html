@@ -1,0 +1,143 @@
+
+<div class="page-heading">
+        <h1 class="page-title">{{title}}</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a routerLink="/index"><i class="la la-home font-20"></i></a>
+            </li>    
+            <li class="breadcrumb-item">
+                <a routerLink="/solicitud" >Solicitud</a>
+            </li>             
+    
+        </ol>
+    </div>
+
+    <div class="ibox">
+        <div class="ibox-body">
+                <div class="form-group text-center">
+
+                        <button class="btn btn-outline-primary btn-fix btn-thick" (click)="mk_imprimir()"  [disabled]="!impreso">
+                            <span class="btn-icon"><i class="ti-printer" ></i>Imprimir</span>
+                        </button>
+                                    
+                    </div>
+
+
+<div id="exportthis" class="page-content fade-in-up">
+    <div class="ibox">
+        <div class="ibox-body">
+            <div class="d-flex justify-content-between mb-5 pb-4">
+                <div class="d-flex align-items-center">
+                    <!-- <span class="mr-4 static-badge badge-pink">AC</span> -->
+                    <div>
+                        <div class="text-left">           
+                            <img src="./assets/img/logos/logo-transparente.png" width="100" height="105">
+                        </div>
+                        <div class="text-light">Empresa: {{solicitud[0].EmpresaNombre}}</div>
+                    </div>
+                </div>
+                <div class="text-right" style="width: 260px;">
+                    <h4 class="font-strong mb-3">Mov: {{solicitud[0].Mov}}
+                        <span class="text-muted font-normal ml-3">Folio: {{solicitud[0].Folio}}</span>
+                    </h4>
+                    <div class="row align-items-center mb-2">
+                        <div class="col-6 text-muted">Fecha Emision</div>
+                        <div class="col-6">{{solicitud[0].FechaEmision | date:formatoFecha}}</div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col-6 text-muted">Fecha Pago</div>
+                        <div class="col-6">{{solicitud[0].FechaEmision | date:formatoFecha}}</div>
+                    </div>
+                    <div class="row align-items-center">
+                            <div class="col-6 text-muted">Doctor</div>
+                            <div class="col-6">{{solicitud[0].vendedornombre}}</div>
+                        </div>
+                        <div class="row align-items-center">
+                                <div class="col-6 text-muted">Referencia</div>
+                                <div class="col-6">{{solicitud[0].Referencia}}</div>
+                        </div>                        
+                </div>
+            </div>
+            <div class="row mb-5 pb-3">
+                <div class="col-6">
+                    <h5 class="font-strong mb-3">Nota De</h5>
+                    <h5 class="font-strong text-success mb-3">Sucursal: {{solicitud[0].SucursalNombre}}</h5>
+                    <div class="text-light">Direccion Sucuras</div>
+                    <div class="text-light">Correo: {{solicitud[0].EmpresaCorreo}}</div>
+                    <div class="text-light">Telefono: (123) 456-2112</div>
+                </div>
+                <div class="col-6 text-right">
+                    <h5 class="font-strong mb-3">Nota Para</h5>
+                    <h5 class="font-strong text-success mb-3">Contacto: {{solicitud[0].ContactoNombre}}</h5>
+                    <div class="text-light">Uso CFDI: {{solicitud[0].Uso}}</div>
+                    <div class="text-light">Correo: {{solicitud[0].ContactoCorreo}}</div>
+                    <div class="text-light">Edad: {{solicitud[0].Edad}}</div>
+                </div>
+            </div>
+            <div class="ibox-fullwidth-block">
+                <table class="table mb-4">
+                    <thead class="thead-default thead-lg">
+                        <tr>
+                            <th class="pl-4">Estudio Descripción</th>
+                            <th class="text-center">Cantidad</th>
+                            <th class="text-right">Precio</th>
+                            <th class="text-right">Importe</th>
+                            <th class="text-right">Impuesto</th>
+                            <th class="text-right pr-4">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let u of solicitudD; let i = index">
+                            <td class="pl-4">
+                                <div><strong>{{u.Articulo}}</strong></div><small>{{u.Descripcion}}</small></td>
+                            <td class="text-center" >{{u.Cantidad}}</td>
+                            <td class="text-right" >{{u.Precio | currency}}</td>
+                            <td class="text-right">{{u.ImporteD | currency}}</td>
+                            <td class="text-right">{{u.Impuesto1ImporteD | currency}}</td>
+                            <td class="text-right pr-4">{{u.TotalD | currency}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="6"></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="d-flex justify-content-end">
+                <div class="text-right" style="width:300px;">
+                    <div class="row mb-2">
+                        <div class="col-6">Subtotal</div>
+                        <div class="col-6">{{solicitud[0].Importe | currency}}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-6">Impuestos:</div>
+                        <div class="col-6">{{solicitud[0].Impuestos | currency}}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-6">Descuento:</div>
+                        <div class="col-6">{{solicitud[0].DescuentoImporte | currency}}</div>
+                    </div>                    
+                    <div class="row font-strong font-20 align-items-center">
+                        <div class="col-6">Total:</div>
+                        <div class="col-6">
+                            <div class="h3 font-strong mb-0">{{solicitud[0].Total | currency}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>    
+    </div>
+
+</div>
+</div>
+</div>
+<!-- <button type="button" class="btn btn-primary" printSectionId="exportthis" ngxPrint>Imprimir</button> -->

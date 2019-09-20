@@ -1,0 +1,75 @@
+<div class="page-heading">
+    <h1 class="page-title">{{title}}</h1>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a routerLink="/index"><i class="la la-home font-20"></i></a>
+        </li>        
+    </ol>
+</div>
+<div class="page-content fade-in-up">
+    <div class="ibox">
+        <div class="ibox-body">
+            <div>
+                <button class="btn btn-success btn-icon-only btn-circle btn-sm btn-air" ><i class="la la-plus" routerLink="/docedit/0"></i></button>
+            </div>
+            
+            <div class="flexbox mb-4">
+                <div class="flexbox">
+                    <label class="mb-0 mr-2">Type:</label>
+                    <select class="selectpicker show-tick form-control" id="type-filter" title="Please select" data-style="btn-solid" data-width="150px">
+                        <option value="">All</option>
+                        <option>ACTIVO</option>
+                        <option>INACTIVO</option>
+                        <option>CONCLUIDO</option>
+                    </select>
+                </div>
+                <div class="input-group-icon input-group-icon-left mr-3">
+                    <span class="input-icon input-icon-right font-16"><i class="ti-search"></i></span>
+                    <input class="form-control form-control-rounded form-control-solid" id="key-search" type="text" placeholder="Search ...">
+                </div>
+            </div>
+            <div class="table-responsive row">
+                <table class="table table-bordered table-hover" id="dtbl_doc">
+                    <thead class="thead-default thead-lg">
+                            
+                        <tr>
+                            <th>#</th>
+                            <th>Doctor</th>
+                            <th>Nombre</th>        
+                            <th>Apellido Paterno</th>     
+                            <th>Apellido Materno</th>                                 
+                            <th>Estatus</th>
+                            <th>Tipo</th>
+                            <th>Fecha Alta</th>
+                            <th>Email</th>
+                            <th>RFC</th> 
+                            <th>Uso Comprobante</th>                    
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let u of doclst; let i = index">                                 
+                            <td>{{i+1}}</td>
+                            <td>
+                                <h5 class="m-0"><a routerLink="/docedit/{{u.Contacto}}">{{u.Contacto}}</a></h5>
+                            </td>
+                            <td>{{u.Nombre}}</td>  
+                            <td>{{u.ApellidoPaterno}}</td> 
+                            <td>{{u.ApellidoMaterno}}</td> 
+                            <td>
+                                <span [ngClass]="mk_getBottonClass(u.AgenteEstatus)">{{u.AgenteEstatus}}</span>
+                            </td>
+                            <td>{{u.AgenteTipo}}</td> 
+                            <td>{{u.UltimoCambio | date:formatoFecha}}</td> 
+                            <td>{{u.Email}}</td> 
+                            <td>{{u.RFC}}</td> 
+                            <td>{{u.UsoComprobante}}</td>                                                         
+
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+        </div>
+    </div>
+</div>
+

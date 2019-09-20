@@ -1,0 +1,39 @@
+<div class="page-heading">
+        <h1 class="page-title">{{title}}</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a routerLink="/index"><i class="la la-home font-20"></i></a>
+            </li>
+            <li class="breadcrumb-item">
+                <a routerLink="/prueba/list">pruebas</a>
+            </li>
+    
+        </ol>
+    </div>
+    <div class="page-content fade-in-up">
+        <div class="ibox">
+            <div class="ibox-head">
+                <div class="mt-4 mb-4">
+                    <button class="btn btn-outline-info btn-icon-only btn-circle btn-sm btn-thick"><i class="la la-bars" routerLink="/prueba/list"></i></button>
+                    <button class="btn btn-outline-info btn-icon-only btn-circle btn-sm btn-thick" (click)="mk_save()"><i class="la la-save"></i></button>
+                </div>
+            </div>
+       
+    
+        <div class="ibox-body">
+            <form class="form-info" id="articuloforma" [formGroup]="articuloforma">
+                <div class="row">
+                    <div class="col-sm-3 form-group mb-4">
+                        <label>Prueba</label>
+                        <input Class="form-control form-control-air" type="text" name="proyecto" placeholder="Prueba" formControlName="articulo" [attr.disabled]="mkEditar?'':null">
+                    </div>
+    
+                    <div class="col-sm-3 form-group mb-4">
+                        <label>Descripcion</label>
+                        <input class="form-control form-control-air" type="text" name="descripcion" placeholder="Descripcion" formControlName="descripcion" >
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
