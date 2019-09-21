@@ -1,3 +1,5 @@
 #Carpetas ignoradas
 /cliente
 /node_modules
+/nbproject/private/
+/dist

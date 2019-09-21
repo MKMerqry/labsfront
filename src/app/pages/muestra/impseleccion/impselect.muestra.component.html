@@ -1,19 +1,20 @@
 <div class="ibox">
     <div class="ibox-head " *ngFor="let u of agregados; let i = index">
-            <tbody class="verticalText" >  
-                <th >
-                    <tr> ..  </tr>     
-                    <tr> ..  </tr>                                                 <!-- :'CEN25', :'06 Agosto 2019', :'21:02 PM', edad:36, name:'Fernando Flores Tapia', codigo:'QUO158', cod1:'60011', cod2:'SM30', cod3:'Tubo-Rojo'                             -->
-                    <tr>
-                        <th class="text-right"><small>{{agregados[i]}}</small></th>
-                    </tr> 
-                    <tr> ..  </tr>  
-                    <tr> ..  </tr>    
-                </th>
-            </tbody>
+        <tbody class="verticalText">
+            <th>
+                <tr> .. </tr>
+                <tr> .. </tr>
+                <!-- :'CEN25', :'06 Agosto 2019', :'21:02 PM', edad:36, name:'Fernando Flores Tapia', codigo:'QUO158', cod1:'60011', cod2:'SM30', cod3:'Tubo-Rojo'                             -->
+                <tr>
+                    <th class="text-right"><small>{{agregados[i]}}</small></th>
+                </tr>
+                <tr> .. </tr>
+                <tr> .. </tr>
+            </th>
+        </tbody>
 
 
-            <!-- <tr  class="">
+        <!-- <tr  class="">
                 <th class="text-left "><small>Edad: {{edad}}</small></th><th colspan="2"class="text-right "><small>{{paciente}}</small></th>
             </tr>
             <tr  class="">
@@ -25,7 +26,7 @@
         </th> -->
 
 
-            <!-- <tbody class="verticalText" *ngFor="let u of agregados; let i = index">                                                   
+        <!-- <tbody class="verticalText" *ngFor="let u of agregados; let i = index">                                                   
                 <tr class="border " >
                     <th  class="">
                         <tr  class="">
@@ -47,31 +48,34 @@
     </div>
     <div class="ibox-body">
 
-            <div class="form-group text-center">
+        <div class="form-group text-center">
 
-                    <button class="btn btn-outline-primary btn-fix btn-thick noprint">
-                            <a routerLink="/selmuestra/{{mkid}}"> <span class="btn-icon"><i class="ti-home" ></i>Regresar</span></a>
-                        </button>
-                    <!-- [disabled]="!impreso" -->
-                    <button class="btn btn-outline-primary btn-fix btn-thick noprint" (click)="mk_imprimir()" >
-                        <span class="btn-icon"><i class="ti-printer" ></i>Imprimir</span>
-                    </button>
-        
-                </div>
+            <button class="btn btn-outline-primary btn-fix btn-thick noprint">
+                <a routerLink="/selmuestra/{{mkid}}"> <span class="btn-icon"><i class="ti-home"></i>Regresar</span></a>
+            </button>
+            <!-- [disabled]="!impreso" -->
+            <button class="btn btn-outline-primary btn-fix btn-thick noprint" (click)="mk_imprimir()">
+                <span class="btn-icon"><i class="ti-printer"></i>Imprimir</span>
+            </button>
+
+        </div>
 
     </div>
 </div>
-<style> 
-.verticalText {
-writing-mode: vertical-lr;
-transform: rotate(90deg);
-}
-    @media print { 
-        .noprint { 
-            visibility: hidden; 
-        } 
-        @page { margin: 0;
-        size: auto; 
-        }           
+<style>
+    .verticalText {
+        writing-mode: vertical-lr;
+        transform: rotate(90deg);
+    }
+
+    @media print {
+        .noprint {
+            visibility: hidden;
+        }
+
+        @page {
+            margin: 0;
+            size: auto;
+        }
     }
 </style>
