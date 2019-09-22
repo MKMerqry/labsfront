@@ -12,6 +12,9 @@ import { Select2Module } from 'ng2-select2';
 import { NgxPrintModule } from 'ngx-print';
 import { NgxBarcodeModule } from 'ngx-barcode';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: 'https://rtpos.merqry.mx', options: {} };
 
 //import { ChartsModule } from 'ng2-charts';
 //import { ChartsModule } from 'ng2-charts/ng2-charts';
@@ -32,7 +35,8 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     Select2Module,
     NgxPrintModule,
     NgxBarcodeModule,
-    NgxDropzoneModule
+    NgxDropzoneModule,
+    SocketIoModule.forRoot(config)
   ],
   exports: [
     FormsModule,

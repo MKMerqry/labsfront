@@ -7,7 +7,7 @@ import { HTMLfuctions } from '../../../_functions/html.fuctions';
 import { Datefuctions } from '../../../_functions/date.function';
 import { WfEstadoService } from '../../../_services/lab/wfestado.service';
 import Swal from 'sweetalert2';
-
+import { Socket } from 'ngx-socket-io';
 
 
 export interface wfe { formawfe: string }
@@ -43,6 +43,7 @@ export class ImpSelectMuestraComponent implements OnInit {
   objwfe: wfe = { formawfe: "Consumo Mat." };
   width: string;
   height: string;
+  socket: Socket;
 
 
 
@@ -67,6 +68,7 @@ export class ImpSelectMuestraComponent implements OnInit {
     this.indice = 0;
     this.width = "2";
     this.height = "45";
+    this.socket = null;
   }
 
   ngOnInit() {
@@ -79,6 +81,14 @@ export class ImpSelectMuestraComponent implements OnInit {
     this.agregados = array.split(',')
     //console.log(array);
     //console.log(this.agregados);
+
+
+    this.socket.emit("init_terminal", {
+      mac: localStorage.mac,
+      empresa: localStorage.Empresa,
+      sucursal: localStorage.Sucursal
+    });
+
 
   }
 
@@ -126,8 +136,14 @@ export class ImpSelectMuestraComponent implements OnInit {
     return -1;
   }
 
+
   mk_imprimir() {
-    window.print()
+
+    this.socket.emit("imprimir", { 
+      mac: localStorage.mac.replace(/:/g, ""),
+      ticket: ""
+    });
+
 
     //var printWindow = window.open();
     //printWindow.document.open('text/plain');
