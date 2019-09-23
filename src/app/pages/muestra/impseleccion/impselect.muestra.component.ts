@@ -7,7 +7,7 @@ import { HTMLfuctions } from '../../../_functions/html.fuctions';
 import { Datefuctions } from '../../../_functions/date.function';
 import { WfEstadoService } from '../../../_services/lab/wfestado.service';
 import Swal from 'sweetalert2';
-import { Socket } from 'ngx-socket-io';
+import * as io from 'socket.io-client';
 
 
 export interface wfe { formawfe: string }
@@ -43,7 +43,7 @@ export class ImpSelectMuestraComponent implements OnInit {
   objwfe: wfe = { formawfe: "Consumo Mat." };
   width: string;
   height: string;
-  socket: Socket;
+  socket: SocketIOClient.Socket;
 
 
 
@@ -83,11 +83,18 @@ export class ImpSelectMuestraComponent implements OnInit {
     //console.log(this.agregados);
 
 
-    this.socket.emit("init_terminal", {
-      mac: localStorage.mac,
-      empresa: localStorage.Empresa,
-      sucursal: localStorage.Sucursal
+    this.socket = io("https://rtpos.merqry.mx");
+
+    this.socket.on('connect', function () {
+      console.log("conectado");
+
+      this.socket.emit("init_terminal", {
+        mac: localStorage.mac,
+        empresa: localStorage.Empresa,
+        sucursal: localStorage.Sucursal
+      });
     });
+
 
 
   }
@@ -139,7 +146,7 @@ export class ImpSelectMuestraComponent implements OnInit {
 
   mk_imprimir() {
 
-    this.socket.emit("imprimir", { 
+    this.socket.emit("imprimir", {
       mac: localStorage.mac.replace(/:/g, ""),
       ticket: ""
     });
