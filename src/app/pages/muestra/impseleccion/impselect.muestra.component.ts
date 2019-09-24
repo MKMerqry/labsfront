@@ -7,7 +7,6 @@ import { HTMLfuctions } from '../../../_functions/html.fuctions';
 import { Datefuctions } from '../../../_functions/date.function';
 import { WfEstadoService } from '../../../_services/lab/wfestado.service';
 import Swal from 'sweetalert2';
-import { WindowRef } from '../../../_services/window.service';
 
 
 export interface wfe { formawfe: string }
@@ -49,8 +48,7 @@ export class ImpSelectMuestraComponent implements OnInit {
     private _solicitudService: SolicitudService,
     private _muestraService: MuestraService,
     private _wfEstadoService: WfEstadoService,
-    private _fb: FormBuilder,
-    private _winRef: WindowRef
+    private _fb: FormBuilder
   ) {
     this.title = "Orden de Trabajo";
     this.solicitud = [];;
@@ -130,16 +128,6 @@ export class ImpSelectMuestraComponent implements OnInit {
 
   mk_imprimir() {
 
-    this._winRef.socket().emit("init_terminal", {
-      mac: localStorage.mac,
-      empresa: localStorage.Empresa,
-      sucursal: localStorage.Sucursal
-    });
-
-    this._winRef.socket().emit("imprimir", {
-      mac: localStorage.mac.replace(/:/g, ""),
-      ticket: ""
-    });
 
 
     //var printWindow = window.open();
