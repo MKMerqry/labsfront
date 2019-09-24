@@ -7,7 +7,7 @@ import { HTMLfuctions } from '../../../_functions/html.fuctions';
 import { Datefuctions } from '../../../_functions/date.function';
 import { WfEstadoService } from '../../../_services/lab/wfestado.service';
 import Swal from 'sweetalert2';
-import * as io from 'socket.io-client';
+import { WindowRef } from '../../../_services/window.service';
 
 
 export interface wfe { formawfe: string }
@@ -16,7 +16,7 @@ export interface wfe { formawfe: string }
 @Component({
   selector: 'app-impselect-muestra',
   templateUrl: './impselect.muestra.component.html',
-  providers: [SolicitudService, MuestraService, WfEstadoService]
+  providers: [SolicitudService, MuestraService, WfEstadoService, WindowRef]
 })
 
 export class ImpSelectMuestraComponent implements OnInit {
@@ -43,17 +43,14 @@ export class ImpSelectMuestraComponent implements OnInit {
   objwfe: wfe = { formawfe: "Consumo Mat." };
   width: string;
   height: string;
-  socket: SocketIOClient.Socket;
-
-
+  winRef: WindowRef;
 
   constructor(
     private _rutaActiva: ActivatedRoute,
     private _solicitudService: SolicitudService,
     private _muestraService: MuestraService,
     private _wfEstadoService: WfEstadoService,
-    private _fb: FormBuilder,
-
+    private _fb: FormBuilder
   ) {
     this.title = "Orden de Trabajo";
     this.solicitud = [];;
@@ -68,7 +65,6 @@ export class ImpSelectMuestraComponent implements OnInit {
     this.indice = 0;
     this.width = "2";
     this.height = "45";
-    this.socket = null;
   }
 
   ngOnInit() {
@@ -82,18 +78,6 @@ export class ImpSelectMuestraComponent implements OnInit {
     //console.log(array);
     //console.log(this.agregados);
 
-
-    this.socket = io("https://rtpos.merqry.mx");
-
-    this.socket.on('connect', function () {
-      console.log("conectado");
-
-      this.socket.emit("init_terminal", {
-        mac: localStorage.mac,
-        empresa: localStorage.Empresa,
-        sucursal: localStorage.Sucursal
-      });
-    });
 
 
 
@@ -146,7 +130,13 @@ export class ImpSelectMuestraComponent implements OnInit {
 
   mk_imprimir() {
 
-    this.socket.emit("imprimir", {
+    this.winRef.socket().emit("init_terminal", {
+      mac: localStorage.mac,
+      empresa: localStorage.Empresa,
+      sucursal: localStorage.Sucursal
+    });
+
+    this.winRef.socket().emit("imprimir", {
       mac: localStorage.mac.replace(/:/g, ""),
       ticket: ""
     });

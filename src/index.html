@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>MerQry Labs</title>
@@ -8,7 +9,18 @@
   <link href='https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700' rel='stylesheet' type='text/css'>
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
+
 <body>
   <app-root></app-root>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+  <script>
+    window.socket = io("https://rtpos.merqry.mx");
+
+    window.socket.on('connect', function () {
+      console.log("conectado");
+ 
+    });
+  </script>
 </body>
+
 </html>
