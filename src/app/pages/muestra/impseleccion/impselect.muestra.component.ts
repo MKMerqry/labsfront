@@ -43,14 +43,14 @@ export class ImpSelectMuestraComponent implements OnInit {
   objwfe: wfe = { formawfe: "Consumo Mat." };
   width: string;
   height: string;
-  winRef: WindowRef;
 
   constructor(
     private _rutaActiva: ActivatedRoute,
     private _solicitudService: SolicitudService,
     private _muestraService: MuestraService,
     private _wfEstadoService: WfEstadoService,
-    private _fb: FormBuilder
+    private _fb: FormBuilder,
+    private _winRef: WindowRef
   ) {
     this.title = "Orden de Trabajo";
     this.solicitud = [];;
@@ -130,13 +130,13 @@ export class ImpSelectMuestraComponent implements OnInit {
 
   mk_imprimir() {
 
-    this.winRef.socket().emit("init_terminal", {
+    this._winRef.socket().emit("init_terminal", {
       mac: localStorage.mac,
       empresa: localStorage.Empresa,
       sucursal: localStorage.Sucursal
     });
 
-    this.winRef.socket().emit("imprimir", {
+    this._winRef.socket().emit("imprimir", {
       mac: localStorage.mac.replace(/:/g, ""),
       ticket: ""
     });
