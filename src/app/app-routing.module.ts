@@ -48,7 +48,7 @@ import { UpResultadoEditComponent } from './pages/upresultado/edit/edit.upresult
 
 import { ResultadoListComponent } from './pages/resultado/list/list.resultado.component';
 
-import { ImpSelectMuestraComponent } from './pages/muestra/impseleccion/impselect.muestra.component';
+
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -193,10 +193,7 @@ const routes: Routes = [
         path: 'comprobante/:id',
         component: ComprobanteComponent
     },
-    {
-        path: 'impselmuestra/:_key',
-        component: ImpSelectMuestraComponent
-    },
+
     {
         'path': 'error_500',
         'component': ComprobanteComponent
@@ -246,7 +243,7 @@ const routes: Routes = [
     
     ResultadoListComponent,
     RecipienteEditComponent,
-    ImpSelectMuestraComponent,
+
     DocEditComponent
 
   ],

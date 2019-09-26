@@ -4,8 +4,8 @@
         <div>
             <h5 class="font-strong">Impresión de Etiquetas</h5>
             <h5 class="font-strong">Nota {{soli}}</h5>
-            <div class="text-light">Paciente: <span class="text-black-50">{{solicitud[0].ContactoNombre}}</span></div>
-            <div class="text-light">Doctor: <span class="text-black-50">{{solicitud[0].vendedornombre}}</span></div>
+            <div class="text-light">Paciente: <span class="text-black-50">{{paciente}}</span></div>
+            <div class="text-light">Doctor: <span class="text-black-50">{{doctor}}</span></div>
         </div>
     </div>
     <div class="row">
@@ -39,9 +39,9 @@
                 <div class="ibox-body tab-content">
                         <div class="form-group text-center"> 
                             <!-- [disabled]="!impreso" -->
-                                <button class="btn btn-outline-primary btn-fix btn-thick" (click)="mk_verImprimir()">
+                                <button class="btn btn-outline-primary btn-fix btn-thick" (click)="mk_imprimir()">
                                     <!-- <a routerLink="/impselmuestra/{{mkid}}"> -->
-                                        <span class="btn-icon"><i class="ti-printer" ></i>Version para Imprimir</span>
+                                        <span class="btn-icon"><i class="ti-printer" ></i>Imprimir</span>
                                     <!-- </a>                                     -->
                                 </button>
                                             
@@ -49,16 +49,16 @@
 
 
                     <div class="tab-pane fade active show" id="accordion-1">
-                        <h5 class="font-strong mb-4 text-primary">Etiquetas</h5>
+                        <h5 class="font-strong mb-4 text-primary">Etiquetas a imprimir</h5>
                         <tbody>
-                                                            <!-- :'CEN25', :'06 Agosto 2019', :'21:02 PM', edad:36, name:'Fernando Flores Tapia', codigo:'QUO158', cod1:'60011', cod2:'SM30', cod3:'Tubo-Rojo'                             -->
+                                                            
                                 <tr class="border" *ngFor="let u of agregados; let i = index">
                                   <th>
                                       <tr>
                                           <th class="text-left font-13">{{soli}}</th><th colspan="2"class="text-right font-13">{{fecha}} {{hora}}</th>
                                       </tr>
                                       <tr>
-                                           <th colspan="3" class="text-right font-13">{{paciente}} Edad:{{edad}} Sexo:H</th>
+                                           <th colspan="3" class="text-right font-13">{{paciente}}  [ {{edad}} ]</th>
                                       </tr>
                                       <tr>
                                             <th colspan="3"class="text-center font-13"><ngx-barcode [bc-value]="soli" [bc-display-value]="falce"></ngx-barcode></th>

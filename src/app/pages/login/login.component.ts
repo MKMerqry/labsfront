@@ -49,6 +49,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
 	public mkuser: any;
 	public empresalstlog: any;
 	public sucursallstlog: any;
+	public loginMensaje: string;
 	formaLogin: FormGroup;
 	
 
@@ -138,7 +139,6 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 	
 	MkClickLogin(){
-
 		this.empresalstlog = this.empresalst.filter( emp => emp.empresa == this.formaLogin.value.empresa);
 		this.sucursallstlog = this.sucursallst.filter( suc => suc.sucursal == this.formaLogin.value.sucursal);
 
@@ -157,21 +157,11 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
 			this.status='error';		
 		} else {	
 			this._userService.signup(this.formaLogin.value).subscribe(
-				response=>{				
-				//	console.log(response);
-					this.identity=response[0];
-					//this.identity=response.user;
-					//this.identity.nombre=response.email;
-					//this.identity.email=response.email;
-					//this.mkuser=response.user;
-					//this.message=response.message;
-					//console.log(this.identity);
-					if (response.length===0) {
-						Swal.fire('MerQry','El usuario o la contraseña no son correctos','error');
-						this.status='error';
-					}else{
-						//this.identity.password='';
-						//conseguir el token
+				response=>{	
+					this.loginMensaje=response[0][0].mensaje;
+					
+					if (this.loginMensaje=='OK'){
+						this.identity=response[0][0];
 						localStorage.setItem('identity',JSON.stringify(this.identity));
 						this._userService.signup(this.formaLogin.value,'true').subscribe(
 							response=>{
@@ -205,8 +195,13 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
 									this.status='error';
 								}
 							}				 			
-						);
+						);						
+
 					}
+					else {
+						Swal.fire('MerQry',this.loginMensaje,'error');
+					}					
+
 				},
 				error=>{
 					var errorMessage =<any>error;

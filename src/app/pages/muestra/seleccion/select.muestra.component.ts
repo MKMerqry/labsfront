@@ -41,9 +41,11 @@ export class SelectMuestraComponent implements OnInit {
   mkbcid: string;
   artfiltro: any[];
   paciente: string;
+  doctor: string;
   hoy : Date = new Date();
   edad: number;
   fecha: string;
+  identity: any;
   hora: string;
   objwfe: wfe= {formawfe:"Consumo Mat."}
   public objrecipiente: intrecipiente;
@@ -76,6 +78,7 @@ export class SelectMuestraComponent implements OnInit {
 
   ngOnInit() {
     this.mkid = this._rutaActiva.snapshot.params._key;
+    this.identity=JSON.parse(localStorage.getItem('identity'));
     this.getsolicitud();
     this.getsolicitudD();
     this.getmuestras();
@@ -140,6 +143,61 @@ mk_quitar(i){
 
 
 
+mk_imprimir() {
+
+  if (this.agregados.length==0){
+    Swal.fire('MerQry', 'Debe un recipiente', 'error');
+  } else {
+    for (const u of this.agregados) {
+      
+      var var_recipiente=u;
+      var var_nombre=this.paciente;
+      var var_sexedad=this.edad;
+      var var_fecha=this.fecha+' '+this.hora
+      var var_folio=this.soli;
+      console.log(this.identity);
+  
+      var mk_ticket='^XA~TA000~JSN^LT0^MNW^MTD^PON^PMN^LH0,0^JMA^PR5,5~SD15^JUS^LRN^CI0^XZ^XA^MMT^PW440^LL0200^LS0^FT103,187^A0N,22,16^FB228,1,0,C^FH\^FD'+var_recipiente+'^FS^FT87,55^A0N,23,24^FB247,1,0,C^FH\^FD'+var_nombre+'^FS^FT3,25^A0N,20,19^FB230,1,0,C^FH\^FD'+var_sexedad+'^FS^FT220,26^A0N,20,19^FB226,1,0,C^FH\^FD'+var_fecha+'^FS^BY2,3,72^FT113,139^BCN,,Y,N^FD>:'+var_folio+'^FS^PQ1,0,1,Y^XZ'
+      fetch("https://rtpos.merqry.mx/print",{
+        mode: 'cors',
+        headers:{
+            'Content-Type': 'application/json'
+          },
+        body:JSON.stringify({ mac: this.identity.MacImpresion, empresa: this.identity.Empresa, sucursal: this.identity.Sucursal, ticket:mk_ticket }),
+        method:"POST"
+        }).then(function(data) {
+               console.log(data);
+        });
+
+    }
+    Swal.fire('MerQry', 'La Impresion se envio Correctamente',"success");
+  }
+
+  
+  // fetch('https://rtpos.merqry.mx/print', {
+  //   headers: {
+  //     'Content-type': 'application/json'
+  //   },
+  //   method: 'POST',
+  //   body: { mac: '24:B6:FD:17:6F:B4', empresa: 1, sucursal: 1 },
+  //   }).then(function(data) {
+  //     console.log(data);
+  //   });
+
+  //var printWindow = window.open();
+  //printWindow.document.open('text/plain');
+  //printWindow.document.write('${'^XA~TA000~JSN^LT0^MNW^MTD^PON^PMN^LH0,0^JMA^PR5,5~SD15^JUS^LRN^CI0^XZ^XA^MMT^PW440^LL0200^LS0^FT103,187^A0N,22,16^FB228,1,0,C^FH\^FDvar_recipiente^FS^FT87,55^A0N,23,24^FB247,1,0,C^FH\^FDvar_nombre^FS^FT3,25^A0N,20,19^FB230,1,0,C^FH\^FDvar_sexedad^FS^FT220,26^A0N,20,19^FB226,1,0,C^FH\^FDvar_fecha^FS^BY2,3,72^FT113,139^BCN,,Y,N^FD>:CEN125^FS^PQ1,0,1,Y^XZ'}$');      
+  //printWindow.document.write('${'^XA^FO50,100^BXN,10,200^FDYourTextHere^FS^XZ'}$');
+  //printWindow.document.close();
+  //printWindow.focus();
+  //printWindow.print();
+
+  //this.mk_wfEstado();
+  //this.ngOnInit(); 
+
+}
+
+
 getsolicitud(){
     this._solicitudService.solicitud_uno(this.mkid).subscribe(
       response => {
@@ -150,6 +208,8 @@ getsolicitud(){
           this.paciente=this.solicitud[0].ContactoNombre;         
           this.edad=this.solicitud[0].ContactoEdad;
           this.mkbcid=this.solicitud[0].BancoID;
+          this.doctor=this.solicitud[0].vendedornombre;
+
         }
       },
       error => {
@@ -214,16 +274,11 @@ getnewmuestras() {
     response => {
       if (response.etiqueta) {
         //console.log(response.etiqueta);
-        this.newmuestraslst = response.etiqueta;        
-        //this.newmuestraslstsinkit = this.newmuestraslst.filter( mues => mues.Recipiente =="Tubo Lila"  );   
-        //var objreci: new Object;
-        //var person = new Object();
-        //this.objrecipiente.articulo =this.newmuestraslst[0].articulo;
-        //this.objrecipiente.descripcion=this.newmuestraslst[0].Recipiente;
-        //this.objrecipiente.articulo = ;
-        //this.objrecipiente.descripcion = this.newmuestraslst[0].Recipiente;
-        this.agregados.push(this.newmuestraslst[0].Recipiente);
-        //console.log(this.agregados );
+        this.newmuestraslst = response.etiqueta;    
+        console.log('muestra',this.newmuestraslst);
+        if (this.newmuestraslst.length > 0 ){
+          this.agregados.push(this.newmuestraslst[0].Recipiente);
+        }
       }
     },
     error => {
