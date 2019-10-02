@@ -19,6 +19,7 @@ declare var $:any;
 })
 export class PagoComponent implements OnInit, AfterViewInit {
   public info: any;
+  identity: any;
   title: string;
   cambio: string;
   doc: any;
@@ -76,14 +77,13 @@ export class PagoComponent implements OnInit, AfterViewInit {
     this.title = 'Pago de Solciitud de Servicio';
     this.detallepago = [];
     this.detalle = [];
-    this.artdetalle = [];
- 
+    this.artdetalle = []; 
     this.notaimporte=0;
-  this.notadescuento=0;
-  this.notadescuentoimp=0;
-  this.notasubtotal=0;
-  this.notaimpuesto=0;
-  this.notatotal=0;
+    this.notadescuento=0;
+    this.notadescuentoimp=0;
+    this.notasubtotal=0;
+    this.notaimpuesto=0;
+    this.notatotal=0;
     this.total = 0;
     this.anticipo = 0;
     this.resta = 0;
@@ -91,11 +91,14 @@ export class PagoComponent implements OnInit, AfterViewInit {
     this.anticipodolares = 0;
     this.restadolares = 0;
     this.formatoFecha = Cfg.formatoFecha;
+    this.info = JSON.parse(localStorage.getItem("solicitud"));  
+    this.identity = JSON.parse(localStorage.getItem("identity"));  
+
+
    }
 
   ngOnInit() {
-    this.info = JSON.parse(localStorage.getItem("solicitud"));
-    console.log(this.info);
+    
     this.createFormPago();
     this.getformaspagcob();  
     this.createformartdetalle();
@@ -114,23 +117,13 @@ export class PagoComponent implements OnInit, AfterViewInit {
       this.formpaso.controls['Impuesto1'].setValue(resulta.Impuesto1);
       this.formpaso.controls['MKDescuento'].setValue(resulta.MKDescuento);
       this.detalle.push(this.formpaso.value);
-      //console.log(resulta.Articulo);
-      //console.log(resulta.MKCantidad);
-      //console.log(resulta.PrecioNeto);
-      //console.log(resulta.Impuesto1);
-      //console.log(resulta.MKDescuento);
-
     })
 
     let mkresControl = <FormArray>this.formartdetalles.controls.mkarticulos;
-    //let mkresControl = <FormArray>this.formres.controls.mkres;
     this.detalle.forEach(resulta => {
-      //console.log(resulta);
       mkresControl.push(this._fb.group(resulta))
     })
     mkresControl.removeAt( 0 );
-    //console.log(mkresControl);
-    //console.log(this.info.tipoCambioDolar);
 
     this.notaimporte = this.formartdetalles.value.mkarticulos.reduce((sum, value) =>
     (typeof value.MKCantidad === 'number' ? sum + (value.PrecioBruto*value.MKCantidad)-((value.PrecioBruto*value.MKCantidad)*((value.MKDescuento )/100.0))  : sum), 0);
@@ -141,23 +134,14 @@ export class PagoComponent implements OnInit, AfterViewInit {
     this.notadescuentoimp=this.notaimporte*(this.notadescuento/100.0);
     this.notasubtotal=this.notaimporte-this.notadescuentoimp;
     this.notaimpuesto=this.notasubtotal*(8/100.0);
-    //this.notaimpuesto = this.formartdetalles.value.mkarticulos.reduce((sum, value) =>
-    //(typeof value.MKCantidad === 'number' ? sum + 
-    //( (((value.PrecioBruto*value.MKCantidad)-((value.PrecioBruto*value.MKCantidad)*((value.MKDescuento )/100.0)))*(value.Impuesto1/100.00)) )  : sum), 0);
-
-    //this.notatotal =  this.formartdetalles.value.mkarticulos.reduce((sum, value) => 
-    //(typeof value.MKCantidad === 'number' ? sum + ((value.PrecioBruto*value.MKCantidad)-((value.PrecioBruto*value.MKCantidad)*((value.MKDescuento )/100.0)))+(((value.PrecioBruto*value.MKCantidad)-((value.PrecioBruto*value.MKCantidad)*((value.MKDescuento )/100.0)))*(value.Impuesto1/100.00)) : sum), 0);
-   
     this.notatotal = this.notasubtotal+this.notaimpuesto;    
-
-
 
     this.total = this.notatotal;
     this.resta = this.notatotal;
-    this.totaldolares = this.notatotal/this.info.tipoCambioDolar;
-    this.restadolares = this.resta/this.info.tipoCambioDolar;
-    this.tipocambiores = this.info.tipoCambioDolar;
-    this.tipocambio=this.info.tipoCambioDolar; 
+    this.totaldolares = this.notatotal/this.identity.TipoCambioDolar;
+    this.restadolares = this.resta/this.identity.TipoCambioDolar;
+    this.tipocambiores = this.identity.TipoCambioDolar;
+    this.tipocambio=this.identity.TipoCambioDolar; 
     this.formControlValueChanged();
     this.formobserChanged();
   }
@@ -274,6 +258,7 @@ export class PagoComponent implements OnInit, AfterViewInit {
       MKDescuento : [{value: ''}, Validators.required],    
     });
   }
+
   getartdetalleUnit() {
     return this._fb.group({
       Articulo : [{value: ''}, Validators.required],
@@ -334,7 +319,7 @@ export class PagoComponent implements OnInit, AfterViewInit {
       descuentopct : [{value: ''}, Validators.required],
       descuentobase : [{value: ''}, Validators.required],
       descuentoimp : [{value: ''}, Validators.required],  
-
+      tipoNom :[{value:''},Validators.required],
       observaciones:[{value:''},Validators.required],
       paciente : [{value: ''}, Validators.required],
       referencia : [{value: ''}, Validators.required],
@@ -351,9 +336,18 @@ export class PagoComponent implements OnInit, AfterViewInit {
       moneda : [{value: ''}, Validators.required],
       tipocambio : [{value: ''}, Validators.required],
       listaprecio : [{value: ''}, Validators.required],
-      ctaBanco : [{value: ''}, Validators.required],
+      
+ 
       detalle: [],
       pago : [],
+      pacienteEntrega :[{value:''},Validators.required],
+      corporativo  :[{value:''},Validators.required],   
+      encuesta  :[{value:''},Validators.required],
+      tiposervicio  :[{value:''},Validators.required],
+      tomamuestra  :[{value:''},Validators.required],
+      tipoenvio  :[{value:''},Validators.required],
+      ctabanco  :[{value:''},Validators.required]
+
     });
 
   }
@@ -366,7 +360,6 @@ export class PagoComponent implements OnInit, AfterViewInit {
     //Swal.fire('MerQry','Para el saldo debe seleccionar la forma de pago Credito', 'error');
   } else {
 
-    this.login=JSON.parse(localStorage.getItem("login"));
     
     if (this.resta > 0) {
       this.formapago.reset();
@@ -384,15 +377,17 @@ export class PagoComponent implements OnInit, AfterViewInit {
     if (this.info.tipoNom == "Empresa/Seguro") {
       this.formasolicitud.controls['paciente'].setValue(this.info.corporativo);
       this.formasolicitud.controls['referencia'].setValue(this.info.pacienteNom);
+
     } else {
       this.formasolicitud.controls['paciente'].setValue(this.info.paciente);
-      this.formasolicitud.controls['referencia'].setValue('personal');
+      this.formasolicitud.controls['referencia'].setValue('personal');      
     } 
 
+    
+    this.formasolicitud.controls['tipoNom'].setValue(this.info.tipoNom);
     this.formasolicitud.controls['folionew'].setValue(this.info.folionew);
     this.formasolicitud.controls['concepto'].setValue(this.info.concepto);
     this.formasolicitud.controls['observaciones'].setValue(this.formobservaciones.get('observaciones').value);
-
     this.formasolicitud.controls['descuentodesc'].setValue(this.formobservaciones.get('descuentodesc').value);
     this.formasolicitud.controls['descuentopct'].setValue(this.formobservaciones.get('descuentopct').value);
     this.formasolicitud.controls['descuentobase'].setValue(this.formobservaciones.get('descuentobase').value);
@@ -400,21 +395,30 @@ export class PagoComponent implements OnInit, AfterViewInit {
 
 
     this.formasolicitud.controls['doctor'].setValue(this.info.doctor);
-    this.formasolicitud.controls['almacen'].setValue('ALM-G');
+    this.formasolicitud.controls['almacen'].setValue(this.identity.AlmacenOmision);
     this.formasolicitud.controls['importe'].setValue(this.notasubtotal);
     this.formasolicitud.controls['impuesto'].setValue(this.notaimpuesto);
     
-    this.formasolicitud.controls['moneda'].setValue('Pesos');
-    this.formasolicitud.controls['tipocambio'].setValue('1.0');
-    this.formasolicitud.controls['listaprecio'].setValue('General');
-    this.formasolicitud.controls['empresa'].setValue(this.login.empresa);
-    this.formasolicitud.controls['mov'].setValue('Nota');
+
+    this.formasolicitud.controls['moneda'].setValue(this.identity.Moneda);
+    this.formasolicitud.controls['tipocambio'].setValue(this.identity.TipoCambioMoneda);
+    this.formasolicitud.controls['listaprecio'].setValue(this.identity.ListaPreciosOmision);
+    this.formasolicitud.controls['empresa'].setValue(this.identity.Empresa);
+    this.formasolicitud.controls['mov'].setValue(this.identity.MovLab);
     this.formasolicitud.controls['estatus'].setValue('SINAPLICAR');
-    this.formasolicitud.controls['usuario'].setValue(this.login.usuario);
-    this.formasolicitud.controls['sucursal'].setValue(this.login.sucursal);
+    this.formasolicitud.controls['usuario'].setValue(this.identity.Usuario);
+    this.formasolicitud.controls['sucursal'].setValue(this.identity.Sucursal);
     this.formasolicitud.controls['detalle'].setValue(this.formartdetalles.get('mkarticulos').value);
 
     this.formasolicitud.controls['pago'].setValue(this.detallepago);
+    this.formasolicitud.controls['pacienteEntrega'].setValue(this.info.paciente);
+    this.formasolicitud.controls['corporativo'].setValue(this.info.corporativo);
+    this.formasolicitud.controls['encuesta'].setValue(this.info.encuesta);
+    this.formasolicitud.controls['tiposervicio'].setValue(this.info.tiposervicio);
+    this.formasolicitud.controls['tomamuestra'].setValue(this.info.tomamuestra);
+    this.formasolicitud.controls['tipoenvio'].setValue(this.info.tipoenvio);
+    this.formasolicitud.controls['ctabanco'].setValue(this.identity.CuentaBancoOmision);
+    
 
     this._solicitudService.solicitud_new(this.formasolicitud.value).subscribe(
       response => {

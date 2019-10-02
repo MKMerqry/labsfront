@@ -22,16 +22,18 @@ export class ArticuloService {
     }
 
 
-	art_list(){               
+	art_list(_id){   
+        let mkid=_id;            
         let headers = new Headers({'Content-Type':'application/json'});
-        return this._http.get(this.url+'/art', {headers: headers}).map(
+        return this._http.get(this.url+'/art/'+mkid ,{headers: headers}).map(
             res => res.json()
             ); 
     }
 
-    art_list2(){               
+    art_list2(_id){     
+        let mkid=_id;           
         let headers = new Headers({'Content-Type':'application/json'});
-        return this._http.get(this.url+'/art2', {headers: headers}).map(
+        return this._http.get(this.url+'/art2/'+mkid, {headers: headers}).map(
             res => res.json()
             ); 
     }

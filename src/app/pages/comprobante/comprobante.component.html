@@ -16,70 +16,70 @@
                 <div class="d-flex align-items-center">
                     <div>
                         <div class="text-left">
-                            <img src="./assets/img/logos/logoestradax100.png" width="200" height="80">
+                            <img src="./assets/img/logos/logoestradax100.png" width="100" height="40">
                         </div>
-                        <div class="text-light">Empresa: {{solicitud[0].EmpresaNombre}}</div>
+                        <div class="text-light"><h6 class="m-0">Empresa: {{solicitud[0].EmpresaNombre}}</h6></div>
                     </div>
                 </div>
                 <div class="text-right" style="width: 260px;">
-                    <h4 class="font-strong mb-3">Mov: {{solicitud[0].Mov}}
+                        <h6 class="m-0">Mov: {{solicitud[0].Mov}}
                                 <span class="text-muted font-normal ml-3">Folio: {{solicitud[0].Folio}}</span>
-                            </h4>
+                            </h6>
                     <div class="row align-items-center mb-2">
-                        <div class="col-6 text-muted">Fecha Emision</div>
-                        <div class="col-6">{{solicitud[0].FechaEmision | date:formatoFecha}}</div>
+                        <div class="col-6 text-muted"><h6 class="m-0">Fecha Emision</h6></div>
+                        <div class="col-6"><h6 class="m-0">{{solicitud[0].FechaEmision | date:formatoFecha}}</h6></div>
                     </div>
                     <div class="row align-items-center">
-                        <div class="col-6 text-muted">Fecha Pago</div>
-                        <div class="col-6">{{solicitud[0].FechaEmision | date:formatoFecha}}</div>
+                        <div class="col-6 text-muted"><h6 class="m-0">Fecha Pago</h6></div>
+                        <div class="col-6"><h6 class="m-0">{{solicitud[0].FechaEmision | date:formatoFecha}}</h6></div>
                     </div>
                     <div class="row align-items-center">
-                        <div class="col-6 text-muted">Doctor</div>
-                        <div class="col-6">{{solicitud[0].vendedornombre}}</div>
+                        <div class="col-6 text-muted"><h6 class="m-0">Doctor</h6></div>
+                        <div class="col-6"><h6 class="m-0">{{solicitud[0].vendedornombre}}</h6></div>
                     </div>
                     <div class="row align-items-center">
-                        <div class="col-6 text-muted">Referencia</div>
-                        <div class="col-6">{{solicitud[0].Referencia}}</div>
+                        <div class="col-6 text-muted"><h6 class="m-0">Referencia</h6></div>
+                        <div class="col-6"><h6 class="m-0">{{solicitud[0].Referencia}}</h6></div>
                     </div>
                 </div>
             </div>
             <div class="row mb-5 pb-3">
                 <div class="col-6">
-                    <h5 class="font-strong mb-3">Nota De</h5>
-                    <h5 class="font-strong text-success mb-3">Sucursal: {{solicitud[0].SucursalNombre}}</h5>
-                    <div class="text-light">Direccion Sucuras</div>
-                    <div class="text-light">Correo: {{solicitud[0].EmpresaCorreo}}</div>
-                    <div class="text-light">Telefono: (123) 456-2112</div>
+                        <h6 class="m-0">Nota De</h6>
+                        <h6 class="m-0">Sucursal: {{solicitud[0].SucursalNombre}}</h6>
+                        <h6 class="m-0"><div class="text-light">Direccion Sucuras</div></h6>
+                        <h6 class="m-0"><div class="text-light">Correo: {{solicitud[0].EmpresaCorreo}}</div></h6>
+                        <h6 class="m-0"><div class="text-light">Telefono: (123) 456-2112</div></h6>
                 </div>
                 <div class="col-6 text-right">
-                    <h5 class="font-strong mb-3">Nota Para</h5>
-                    <h5 class="font-strong text-success mb-3">Contacto: {{solicitud[0].ContactoNombre}}</h5>
-                    <div class="text-light">Uso CFDI: {{solicitud[0].Uso}}</div>
-                    <div class="text-light">Correo: {{solicitud[0].ContactoCorreo}}</div>
-                    <div class="text-light">Edad: {{solicitud[0].Edad}}</div>
+                        <h6 class="m-0">Nota Para</h6>
+                        <h6 class="m-0">Contacto: {{solicitud[0].ContactoNombre}}</h6>
+                        <h6 class="m-0"><div class="text-light">Uso CFDI: {{solicitud[0].Uso}}</div></h6>
+                        <h6 class="m-0"><div class="text-light">Correo: {{solicitud[0].ContactoCorreo}}</div></h6>
+                        <h6 class="m-0"><div class="text-light">Edad: {{solicitud[0].Edad}}</div></h6>
                 </div>
             </div>
             <div class="ibox-fullwidth-block">
                 <table class="table mb-4">
                     <thead class="thead-default thead-lg">
                         <tr>
-                            <th class="pl-4">Estudio Descripción</th>
-                            <th class="text-center">Cantidad</th>
-                            <th class="text-right">Precio</th>
-                            <th class="text-right">Importe</th>
-                            <th class="text-right">Impuesto</th>
-                            <th class="text-right pr-4">Total</th>
+                            <th class="pl-4"><h6 class="m-0">Estudio Descripción</h6></th>
+                            <th class="text-center"><h6 class="m-0">Cantidad</h6></th>
+                            <th class="text-right"><h6 class="m-0">Precio</h6></th>
+                            <th class="text-right"><h6 class="m-0">Importe</h6></th>
+                            <th class="text-right"><h6 class="m-0">Impuesto</h6></th>
+                            <th class="text-right pr-4"><h6 class="m-0">Total</h6></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let u of solicitudD; let i = index">
                             <td class="pl-4">
-                                <div><strong>{{u.Articulo}}</strong></div><small>{{u.Descripcion}}</small></td>
-                            <td class="text-center">{{u.Cantidad}}</td>
-                            <td class="text-right">{{u.Precio | currency}}</td>
-                            <td class="text-right">{{u.ImporteD | currency}}</td>
-                            <td class="text-right">{{u.Impuesto1ImporteD | currency}}</td>
-                            <td class="text-right pr-4">{{u.TotalD | currency}}</td>
+                                <div><h6 class="m-0">{{u.Articulo}}</h6><strong></strong></div><small>{{u.Descripcion}}</small></td>
+                            <td class="text-center"><h6 class="m-0">{{u.Cantidad}}</h6></td>
+                            <td class="text-right"><h6 class="m-0">{{u.Precio | currency}}</h6></td>
+                            <td class="text-right"><h6 class="m-0">{{u.ImporteD | currency}}</h6></td>
+                            <td class="text-right"><h6 class="m-0">{{u.Impuesto1ImporteD | currency}}</h6></td>
+                            <td class="text-right pr-4"><h6 class="m-0">{{u.TotalD | currency}}</h6></td>
                         </tr>
                     </tbody>
                     <tfoot>
@@ -92,31 +92,29 @@
             <div class="d-flex justify-content-end">
                 <div class="text-right" style="width:300px;">
                     <div class="row mb-2">
-                        <div class="col-6">Subtotal</div>
-                        <div class="col-6">{{solicitud[0].Importe | currency}}</div>
+                        <div class="col-6"><h6 class="m-0">Subtotal:</h6></div>
+                        <div class="col-6"><h6 class="m-0">{{solicitud[0].Importe | currency}}</h6></div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-6">Impuestos:</div>
-                        <div class="col-6">{{solicitud[0].Impuestos | currency}}</div>
+                        <div class="col-6"><h6 class="m-0">Impuestos:</h6></div>
+                        <div class="col-6"><h6 class="m-0">{{solicitud[0].Impuestos | currency}}</h6></div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-6">Descuento:</div>
-                        <div class="col-6">{{solicitud[0].DescuentoImporte | currency}}</div>
+                        <div class="col-6"><h6 class="m-0">Descuento:</h6></div>
+                        <div class="col-6"><h6 class="m-0">{{solicitud[0].DescuentoImporte | currency}}</h6></div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-6">Total:</div>
-                        <div class="col-6">{{solicitud[0].Total | currency}}</div>
+                        <div class="col-6"><h6 class="m-0">Total:</h6></div>
+                        <div class="col-6"><h6 class="m-0">{{solicitud[0].Total | currency}}</h6></div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-6">Pago:</div>
-                        <div class="col-6">{{solicitud[0].Anticipo | currency}}</div>
+                        <div class="col-6"><h6 class="m-0">Pago:</h6></div>
+                        <div class="col-6"><h6 class="m-0">{{solicitud[0].Anticipo | currency}}</h6></div>
                     </div>
-                    <div class="row font-strong font-20 align-items-center">
-                        <div class="col-6">Saldo:</div>
-                        <div class="col-6">
-                            <div class="h3 font-strong mb-0">{{solicitud[0].Saldo | currency}}</div>
-                        </div>
-                    </div>                    
+                    <div class="row mb-2">
+                        <div class="col-6"><h6 class="m-0">Saldo:</h6></div>
+                        <div class="col-6"><h6 class="m-0">{{solicitud[0].Saldo | currency}}</h6></div>
+                    </div>                   
                 </div>
             </div>
         </div>

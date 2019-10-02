@@ -3,34 +3,34 @@
         <table id="mytable" style="width:100%">
             <tr>
                 <td class="text-left" rowspan="3">
-                        <img src="./assets/img/logos/logoestradax100.png" width="200" height="80">
+                        <img src="./assets/img/logos/logoestradax100.png" width="100" height="40">
                 </td>
-                <td class="text-center" rowspan="2"><h3 class="font-strong">RESULTADOS DE LOS EXAMENES</h3></td> 
-                <td ><h6 class="font-strong mb-4">Folio: <span class="text-black-50">{{folio}}</span></h6></td>
+                <td class="text-center" rowspan="2"><h6 class="m-0">RESULTADOS DE LOS EXAMENES</h6></td> 
+                <td ><h6 class="m-0">Folio: <span class="text-black-50">{{folio}}</span></h6></td>
             </tr>  
             <tr>
-                <td ><h6 class="font-strong mb-4">CVE P: <span class="text-black-50">{{clavep}}</span></h6></td>
+                <td ><h6 class="m-0">CVE P: <span class="text-black-50">{{clavep}}</span></h6></td>
             </tr>  
             <tr>   
-                <td ><h6 class="font-strong mb-4">NOMBRE: <span class="text-black-50">{{paciente}}</span></h6></td>
-                <td ><h6 class="font-strong mb-4">FECHA: <span class="text-black-50">{{fecha}}</span></h6></td>    
+                <td ><h6 class="m-0">NOMBRE: <span class="text-black-50">{{paciente}}</span></h6></td>
+                <td ><h6 class="m-0">FECHA: <span class="text-black-50">{{fecha}}</span></h6></td>    
             </tr>  
             <tr>
-                <td>''</td>
-                <td ><h6 class="font-strong mb-4">MEDICO: <span class="text-black-50">{{doctor}}</span></h6></td>
-                <td ><h6 class="font-strong mb-4">SEXO: <span class="text-black-50">{{sexo}}</span></h6></td>                 
+                <td></td>
+                <td ><h6 class="m-0">MEDICO: <span class="text-black-50">{{doctor}}</span></h6></td>
+                <td ><h6 class="m-0">SEXO: <span class="text-black-50">{{sexo}}</span></h6></td>                 
           
             </tr>  
             <tr>
-                <td>''</td>
-                <td ><h6 class="font-strong mb-4">EXAMENES: <span class="text-black-50">{{examenes}}</span></h6></td>
-                <td ><h6 class="font-strong mb-4">EDAD: <span class="text-black-50">{{edad}}</span></h6></td>  
+                <td></td>
+                <td ><h6 class="m-0">EXAMENES: <span class="text-black-50">{{examenes}}</span></h6></td>
+                <td ><h6 class="m-0">EDAD: <span class="text-black-50">{{edad}}</span></h6></td>  
 
             </tr>  
             <tr>
-                <td >''</td>
-                <td>''</td>
-                <td ><h6 class="font-strong mb-4">SERVICIO: <span class="text-black-50">{{servicio}}</span></h6></td>  
+                <td ></td>
+                <td></td>
+                <td ><h6 class="m-0">SERVICIO: <span class="text-black-50">{{servicio}}</span></h6></td>  
             </tr>        
          </table>
 
@@ -39,57 +39,34 @@
         <table style="width:100%">
             <thead>
                 <tr>                                 
-                    <td class="text-center"><h6 class="font-strong mb-4">EXAMEN</h6></td>
-                    <td class="text-center"><h6 class="font-strong mb-4">RESULTADO</h6></td>
-                    <td class="text-center"><h6 class="font-strong mb-4">VALOR DE REFERENCIA</h6></td>  
+                    <td class="text-center"><h6 class="m-0">EXAMEN</h6></td>
+                    <td class="text-center"><h6 class="m-0">RESULTADO</h6></td>
+                    <td class="text-center"><h6 class="m-0">VALOR DE REFERENCIA</h6></td>  
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let u of resultadoClst; let i = index">                                 
                     <td [ngClass]="mk_titulo(u.ValorCapturado)">{{u.Estudio}}</td>
                     <td [ngClass]="mk_captura(u.ValorMinimo,u.ValorCapturado,u.ValorMaximo)" > {{u.ValorCapturado}}  {{u.asterisco}} {{u.asterisco}}  </td>
-                    <td class="text-center">{{u.ValorMinimo}} {{u.ValorMaximo}} - {{u.Unidad}}</td> 
+                    <td class="text-center"><h6 class="m-0">{{u.ValorMinimo}} {{u.ValorMaximo}} - {{u.Unidad}}</h6></td> 
                 </tr>
             </tbody>
         </table>
 
-        <!-- <table style="width:100%">
-                <thead>
-                    <tr>                                 
-                        <td class="text-center"><h6 class="font-strong mb-4">...</h6></td>
-                        <td class="text-center"><h6 class="font-strong mb-4">...</h6></td>
-                        <td class="text-center"><h6 class="font-strong mb-4">...</h6></td>  
-                        <td class="text-center"><h6 class="font-strong mb-4">...</h6></td>
-                        <td class="text-center"><h6 class="font-strong mb-4">...</h6></td>
-                        <td class="text-center"><h6 class="font-strong mb-4">...</h6></td>                         
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let u of linkd; let i = index">                                 
-                        <td> {{u.mk_0}}</td>
-                        <td> {{u.mk_1}}</td>
-                        <td> {{u.mk_2}}</td>
-                        <td> {{u.mk_3}}</td>
-                        <td> {{u.mk_4}}</td>
-                        <td> {{u.mk_5}}</td>
- 
-                    </tr>
-                </tbody>
-            </table>         -->
     </div>
     <div class="ibox-footer">
             <table style="width:100%">
                 <tbody>
                     <tr>
                             <td class="text-center">REVISADO/APROBADO</td>
-                            <td >''</td>
+                            <td ></td>
                             <td class="text-center">ATENTAMENTE</td> 
                         
                     </tr>
                     <tr>
                             <td class="text-center"><h6 class="font-strong mb-4">QBP. GUMERSINDO ORTUÑO GUTIERREZ</h6></td>
-                            <td >''</td>
-                            <td class="text-center"><h6 class="font-strong mb-4">Q.F.B. MARIO LEONARDO ESTRADA OCHOA</h6></td> 
+                            <td ></td>
+                            <td class="text-center"><img src="./assets/img/firmas/firma1.png" width="100" height="40"><h6 class="font-strong mb-4">Q.F.B. MARIO LEONARDO ESTRADA OCHOA</h6></td> 
                         
                     </tr>    
                 </tbody> 

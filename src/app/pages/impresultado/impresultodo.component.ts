@@ -77,7 +77,7 @@ public linkd: any;
 mk_imprimir(){
     window.print()
     this.mk_wfEstado();
-    this.ngOnInit(); 
+    //this.ngOnInit(); 
     
 }
 

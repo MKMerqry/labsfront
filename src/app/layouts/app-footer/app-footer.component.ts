@@ -19,6 +19,8 @@ export class AppFooter implements OnInit {
   public fechaTrabajo: string;
   public anio: number;
   public login: any;
+  public identity: any;
+
 
 
 
@@ -30,12 +32,13 @@ export class AppFooter implements OnInit {
     this.login=JSON.parse(this._userService.getLogin());
   }
 
-  ngOnInit () {    
+  ngOnInit () { 
+    this.identity= JSON.parse(localStorage.getItem('identity'));
     if ((localStorage.identity !== undefined)) {
-      this.usuario=this.login.usuario;
-      this.empresa = this.login.empresa;
-      this.fechaTrabajo = this.login.fecha;
-      this.sucursal = this.login.sucursal;
+      this.usuario=this.identity.Usuario;
+      this.empresa = this.identity.EmpresaNombre;
+      this.fechaTrabajo = this.identity.Fecha;
+      this.sucursal = this.identity.SucursalNombre;
     } else {
       console.log('footer no se encontro localStorage.nombre');
     }

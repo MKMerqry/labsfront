@@ -19,14 +19,17 @@ declare var $:any;
 })
 export class ProductsListComponent implements OnInit, AfterViewInit {
   public title: string;
+  public identity: any;
+
   public artlst: any; doclst: any; pacientelst: any;
   public artlstant: any;
   public total: string;
   public artadd: any;
+  public urgentelist: any;
+  public detallefoliocan: any;
   public indice: number;
   public moneda: any;
   public folionew: any;
-  public showfolio: boolean = false;
   public folionewNombreCntacto: any;
   public infofolionew: any;
   public pacienteforma: FormGroup;
@@ -38,7 +41,8 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
   public tipoNomlis: any[]; pacienteNom: any[]; doctorNom: any[];
   formsolicitud: FormGroup;
   public concepto: any;
-  public edad:any;
+  public edad: any;
+  
 
 
 
@@ -59,28 +63,26 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
     this.doctorNom = [];
     this.tipoNomlis=['Personal','Empresa/Seguro']
     this.total = '0';
-   }
-
-
-   onChangeEncuenta(event){
-     //console.log(event);
-     this.concepto=event;
-   }
-  ngOnInit() {
+    this.identity=JSON.parse(localStorage.getItem('identity'));
     this.folionew = localStorage.getItem("folio");
-    //console.log(this.folionew);
+   }
+
+  ngOnInit() {
+    this.createFormSolicitud();
+    this.createFormPaciente();
+
+    console.log(this.folionew);
+
     if ( (this.folionew =='0' || this.folionew =='null'|| this.folionew == null)  ) {
-      this.showfolio=false;      
+      this.formsolicitud.controls['folionew'].setValue('');
       this.folionew ='0'
     } else {
-      this.showfolio=true;
       this.getfolios();
+
     }
-    this.gettipocambio('Dolares');
+
     this.getart();    
-    this.getdoc();    
-    this.createFormSolicitud();
-    this.createFormArticulo();
+    this.getdoc();
     this.getpaciente();
     this.onChangesNacimiento();
     
@@ -97,10 +99,39 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
       response => {
         if (response.cancelacion){       
           this.infofolionew = response.cancelacion;   
-          this.newfoliocontacto=this.infofolionew[0].contacto;       
-          //console.log(this.infofolionew);
-          //console.log(this.folionewNombreCntacto);
+          console.log(this.infofolionew);
+          this.formsolicitud.controls['folionew'].setValue(this.infofolionew[0].folio);
+          this.formsolicitud.controls['paciente'].setValue(this.infofolionew[0].contacto);
+          this.formsolicitud.controls['cliente'].setValue(this.infofolionew[0].contacto);
+          this.formsolicitud.controls['doctor'].setValue(this.infofolionew[0].doctor);
+          this.formsolicitud.controls['tipoNom'].setValue(this.infofolionew[0].tiponota);
+          this.formsolicitud.controls['encuesta'].setValue(this.infofolionew[0].encuesta);
+          this.formsolicitud.controls['tiposervicio'].setValue(this.infofolionew[0].servicio);
+          this.formsolicitud.controls['tomamuestra'].setValue(this.infofolionew[0].muestra);
+          this.formsolicitud.controls['tipoenvio'].setValue(this.infofolionew[0].envio);
 
+          this.newfoliocontacto=this.infofolionew[0].contacto;  
+          this._cancelacionService.cancelacion_lstdet(this.folionew).subscribe(
+            response => {
+              if (response.cancelaciondet){
+                
+                this.detallefoliocan=response.cancelaciondet;
+                for (const art of this.detallefoliocan) {
+                  this.mk_add(art.articulo);
+
+                }
+                   
+
+      
+              }          
+            },
+            error=>{
+              var errorMessage =<any>error;
+              if (errorMessage != null) {
+                var mkerrores =JSON.parse(error._body);
+                Swal.fire('MerQry',mkerrores.message + '...', 'error');
+              }
+            }); 
         }          
       },
       error=>{
@@ -113,22 +144,6 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
   }
 
 
-  gettipocambio(moneda){
-    this._monedaService.moneda_uno(moneda).subscribe(
-      response => {
-        if (response.moneda){       
-          this.moneda = response.moneda;
-          //console.log(this.moneda);
-        }          
-      },
-      error=>{
-        var errorMessage =<any>error;
-        if (errorMessage != null) {
-          var mkerrores =JSON.parse(error._body);
-          Swal.fire('MerQry',mkerrores.message + '...', 'error');
-        }
-      }); 
-  }
   createFormSolicitud() {
     
     this.formsolicitud = this._fb.group({
@@ -147,9 +162,14 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
       doctorNom :[{value:''},Validators.required],
       articulos :[],
       total :[{value:''},Validators.required],
+      encuesta  :[{value:''},Validators.required],
+      tiposervicio  :[{value:''},Validators.required],
+      tomamuestra  :[{value:''},Validators.required],
+      tipoenvio  :[{value:''},Validators.required]
     });
 
     this.formsolicitud.reset();
+
     this.formsolicitud.controls['folionew'].setValue('');
     this.formsolicitud.controls['concepto'].setValue('');
     this.formsolicitud.controls['tipo'].setValue('');
@@ -159,12 +179,17 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
     this.formsolicitud.controls['referencia'].setValue('');
     this.formsolicitud.controls['corporativo'].setValue('');
     this.formsolicitud.controls['doctor'].setValue('');
-    this.formsolicitud.controls['tipoNom'].setValue('');
+    this.formsolicitud.controls['tipoNom'].setValue('Personal');
     this.formsolicitud.controls['pacienteNom'].setValue('');
     this.formsolicitud.controls['corporativoNom'].setValue('');
     this.formsolicitud.controls['doctorNom'].setValue('');
     this.formsolicitud.controls['articulos'].setValue('');
     this.formsolicitud.controls['total'].setValue('');
+    this.formsolicitud.controls['encuesta'].setValue('Anuncio Afuera');
+    this.formsolicitud.controls['tiposervicio'].setValue('Ordinario');
+    this.formsolicitud.controls['tomamuestra'].setValue('Sucursal');
+    this.formsolicitud.controls['tipoenvio'].setValue('Indefinido');
+
 
 
   }
@@ -184,7 +209,7 @@ onChangesNacimiento() {
     this.pacienteforma.controls['edad'].setValue(this.edad);
   });
 }
-createFormArticulo(){
+createFormPaciente(){
   this.pacienteforma = this._fb.group({
     contacto : [{value: ''}, Validators.required],
     nombre : [{value: ''}, Validators.required],
@@ -195,6 +220,7 @@ createFormArticulo(){
     sexo : [{value: ''}, Validators.required],
     correo : [{value: ''}, Validators.required],
     estatus: [{value: ''}, Validators.required],
+    telefono: [{value: ''}, Validators.required],
   });
 
   this.pacienteforma.reset();
@@ -207,6 +233,11 @@ createFormArticulo(){
     this.pacienteforma.controls['sexo'].setValue('');
     this.pacienteforma.controls['correo'].setValue('');
     this.pacienteforma.controls['estatus'].setValue('ACTIVO');
+    this.pacienteforma.controls['telefono'].setValue('');
+
+    
+
+
 
 }
 
@@ -219,8 +250,8 @@ createFormArticulo(){
       Swal.fire('MerQry','La fecha de nacimiento es un dato obligatorio', 'error');       
     } else if ( this.pacienteforma.value.sexo == "" || !this.pacienteforma.value.sexo ) {
       Swal.fire('MerQry','El genero es un dato obligatorio', 'error');
-    } else if ( this.pacienteforma.value.correo == "" || !this.pacienteforma.value.correo ) {
-      Swal.fire('MerQry','El correo es un dato obligatorio', 'error');   
+    //} else if ( this.pacienteforma.value.correo == "" || !this.pacienteforma.value.correo ) {
+     // Swal.fire('MerQry','El correo es un dato obligatorio', 'error');   
     } else {
       this._pacienteService.paciente_newexpress(this.pacienteforma.value).subscribe(
         response => {
@@ -230,7 +261,8 @@ createFormArticulo(){
             $("#modal_pacientenew").modal('hide');//ocultamos el modal
             $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
             $('.modal-backdrop').remove();//eliminamos el backdrop del modal
-            this.createFormArticulo();
+            this.createFormPaciente();
+            this.formsolicitud.controls['paciente'].setValue(this.pacienteforma.value.contacto);
           }
         },
         error => {
@@ -261,7 +293,7 @@ createFormArticulo(){
       
   mk_add(key){
     //console.log(key);
-    console.log(this.artadd);
+    //console.log(this.artadd);
     this.artadd = this.artlst.filter( u => u.Articulo == key);
     this.indice = this.arrayObjectIndexOf(this.detalle, key, "Articulo" );
     //this.artadd[0].MKCantidad=1;
@@ -288,7 +320,8 @@ createFormArticulo(){
   }
 
   getart() {
-    this._articuloService.art_list().subscribe(
+    var mkempresa=this.identity.Empresa;
+    this._articuloService.art_list(mkempresa).subscribe(
       response => {
         console.log(response.articulo);
         if (response.articulo) {
@@ -353,8 +386,10 @@ createFormArticulo(){
   }
 
   mk_pagar(){   
-    //console.log(this.folionew);
 
+      console.log(this.formsolicitud.value.tiposervicio,this.detalle);
+
+      this.urgentelist = this.detalle.filter( art => art.Articulo == "URGE");
   	if ( this.formsolicitud.value.paciente == "" || !this.formsolicitud.value.paciente ) {
       Swal.fire('MerQry','El paciente es un dato obligatorio', 'error');	
     //} else if ( this.formsolicitud.value.concepto == "" || !this.formsolicitud.value.concepto ) {
@@ -367,26 +402,37 @@ createFormArticulo(){
       Swal.fire('MerQry','El corporativo es un dato obligatorio', 'error'); 
     } else if ( this.detalle.length == 0  ) {
       Swal.fire('MerQry','Seleccione por lo menos un estudio', 'error');    
+    } else if ( this.formsolicitud.value.encuesta == "" || !this.formsolicitud.value.encuesta ) {
+      Swal.fire('MerQry','La encuesta es un dato obligatorio', 'error');   
+    } else if ( this.formsolicitud.value.tiposervicio == "" || !this.formsolicitud.value.tiposervicio ) {
+      Swal.fire('MerQry','El tipo de servicio es un dato obligatorio', 'error');   
+    } else if ( this.formsolicitud.value.tomamuestra == "" || !this.formsolicitud.value.tomamuestra ) {
+      Swal.fire('MerQry','La toma de muestra es un dato obligatorio', 'error'); 
+    } else if ( this.formsolicitud.value.tipoenvio == "" || !this.formsolicitud.value.tipoenvio ) {
+      Swal.fire('MerQry','El tipo de envio es un dato obligatorio', 'error'); 
     } else if ((this.folionew !='0') && (this.formsolicitud.value.tipoNom == "Empresa/Seguro" && this.formsolicitud.value.corporativo != this.newfoliocontacto ) ) {            
       Swal.fire('MerQry','El folio es exclusivo para el paciente: '+this.folionewNombreCntacto[0].MKNombre, 'error');  
     } else if ((this.folionew !='0') && (this.formsolicitud.value.tipoNom != "Empresa/Seguro" && this.formsolicitud.value.paciente != this.newfoliocontacto)) {
       Swal.fire('MerQry','El folio es exclusivo para el paciente: '+this.folionewNombreCntacto[0].MKNombre, 'error');  
+    } else if (this.formsolicitud.value.tiposervicio == "Urgente" && this.urgentelist.length==0) {
+        Swal.fire('MerQry','la Solicitud es urgente, y no se encontro el articulo URGE', 'error');             
     } else {  
 
 
     this.doctorNom = this.doclst.filter( u => u.Contacto == this.formsolicitud.value.doctor);
     this.pacienteNom = this.pacientelst.filter( u => u.Contacto == this.formsolicitud.value.paciente);      
+    
     this.formsolicitud.controls['folionew'].setValue(this.folionew);
     this.formsolicitud.controls['concepto'].setValue(this.concepto);
     
     this.formsolicitud.controls['doctorNom'].setValue(this.doctorNom[0].MKNombre);
     this.formsolicitud.controls['corporativoNom'].setValue(this.pacienteNom[0].MKNombre);
     this.formsolicitud.controls['pacienteNom'].setValue(this.pacienteNom[0].MKNombre);
-    this.formsolicitud.controls['tipoCambioDolar'].setValue(this.moneda[0].TipoCambio);
-    //  console.log(this.formsolicitud.value);
+    this.formsolicitud.controls['tipoCambioDolar'].setValue(this.identity.TipoCambioDolar);
+    this.formsolicitud
     localStorage.removeItem("solicitud");
     localStorage.setItem("solicitud", JSON.stringify(this.formsolicitud.value));
-    console.log(this.concepto);
+  
     this._router.navigate(['pago/new']);
     }
   }
@@ -417,8 +463,6 @@ createFormArticulo(){
   }
 
   ngAfterViewInit() {
-    setTimeout(function(){  
-    },1500);
 
     this._script.load('./assets/js/scripts/form-plugins.js');
 

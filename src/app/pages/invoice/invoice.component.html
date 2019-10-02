@@ -31,30 +31,32 @@
                     <!-- <span class="mr-4 static-badge badge-pink">AC</span> -->
                     <div>
                         <div class="text-left">           
-                            <img src="./assets/img/logos/logo-transparente.png" width="100" height="105">
+                            <img src="./assets/img/logos/logo-transparente.png" width="25" height="30">
                         </div>
-                        <div class="text-light">Empresa: {{solicitud[0].EmpresaNombre}}</div>
+                        <div class="text-light"><h6 class="m-0">Empresa: {{solicitud[0].EmpresaNombre}}</h6></div>
                     </div>
                 </div>
                 <div class="text-right" style="width: 260px;">
-                    <h4 class="font-strong mb-3">Mov: {{solicitud[0].Mov}}
+                    <h6 class="m-0">Mov: {{solicitud[0].Mov}}
                         <span class="text-muted font-normal ml-3">Folio: {{solicitud[0].Folio}}</span>
-                    </h4>
+                    </h6>
                     <div class="row align-items-center mb-2">
-                        <div class="col-6 text-muted">Fecha Emision</div>
-                        <div class="col-6">{{solicitud[0].FechaEmision | date:formatoFecha}}</div>
+                        <div class="col-6 text-muted"><h6 class="m-0">Fecha Emision</h6></div>
+                        <div class="col-6"><h6 class="m-0">{{solicitud[0].FechaEmision | date:formatoFecha}}</h6></div>
                     </div>
                     <div class="row align-items-center">
                         <div class="col-6 text-muted">Fecha Pago</div>
-                        <div class="col-6">{{solicitud[0].FechaEmision | date:formatoFecha}}</div>
+                        <div class="col-6"><h6 class="m-0">{{solicitud[0].FechaEmision | date:formatoFecha}}</h6></div>
                     </div>
                     <div class="row align-items-center">
                             <div class="col-6 text-muted">Doctor</div>
-                            <div class="col-6">{{solicitud[0].vendedornombre}}</div>
+                            <div class="col-6"><h6 class="m-0">{{solicitud[0].vendedornombre}}</h6></div>
                         </div>
                         <div class="row align-items-center">
+                            <h6 class="m-0">
                                 <div class="col-6 text-muted">Referencia</div>
                                 <div class="col-6">{{solicitud[0].Referencia}}</div>
+                            </h6>
                         </div>                        
                 </div>
             </div>

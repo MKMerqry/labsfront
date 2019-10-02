@@ -27,9 +27,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   public solicitudlst: string[];
   public artlst: any[];
   public bancolst :any[];
-  public fechaformato: string;
+  public formatofecha: string;
   public total: number;
   public saldo: number;
+  public identity: any;
  
 
 
@@ -41,17 +42,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private datePipe: DatePipe,
     
     ) {
-      this.fechaformato=Cfg.formatoFecha;
+      
+      this.formatofecha = Cfg.formatoFecha;
        }
 
   ngOnInit() {
-    console.log('inicio');
+    this.identity=JSON.parse(localStorage.getItem('identity'));
     this.getsolicitud();
     this.getart_topten();
     this.topics = ['C', 'C#'];
 
-    //this._script.load('./assets/js/scripts/home.js');
-    //this._script.load('./assets/js/scripts/home.js');
   }
 
   mk_getBottonClass(status){
@@ -60,22 +60,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this._script.load('./assets/js/scripts/dashboard_6.js');
-    //this._script.load('./assets/js/scripts/dashboard_6.js', './assets/js/scripts/calendar-demo.js');
-    //console.log('fin');
-    //console.log(this.nombre); // aparece la propiedad nativeElement y dentro una gran cantidad de propiedades y métodos
-    //this.nombre.nativeElement.setAttribute('placeholder', 'Escriba su nombre');
-    //this.nombre.nativeElement.addClass('una-clase');
-    //this.nombre.nativeElement.focus();
     }
 
 
     getart_topten() {
-      this._articuloService.art_list2().subscribe(
+      this._articuloService.art_list2(this.identity.Sucursal).subscribe(
         response => {
           if (response.articulo) {
             this.artlst = response.articulo;     
-            console.log( this.artlst);
-            console.log( response.articulo);
+            //console.log( this.artlst);
+            //console.log( response.articulo);
           }
         },
         error => {
@@ -87,16 +81,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
         });
     }
     getsolicitud() {
-      this._bancoService.banco_list2('1').subscribe(
+      this._bancoService.banco_list2(this.identity.Sucursal).subscribe(
         response => {
           if (response.banco) {
             this.bancolst = response.banco;
 
             this.total = this.bancolst.reduce((sum, value) => (typeof value.Importe == "number" ? sum + value.importe : sum), 0);
             this.saldo = this.bancolst.reduce((sum, value) => (typeof value.Saldo == "number" ? sum + value.importe : sum), 0);
-
-
-            console.log(this.bancolst);
+            //console.log(this.bancolst);
           }
         },
         error => {

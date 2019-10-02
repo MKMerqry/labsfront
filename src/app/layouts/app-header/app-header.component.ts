@@ -46,23 +46,19 @@ constructor (
 }
 
   ngOnInit () {
-    this.login = JSON.parse(this._userService.getLogin());
-    this.identity = this._userService.getIdentity();
-    this.empresa = 'MerQry';
-    if (this.identity!==null && this.identity!==undefined && this.identity.nombre!==undefined) {
-      this.empresa = this.login.empnombre;
-      this.fechaTrabajo = this.login.fecha;
-      this.sucursal = this.login.sucnombre;
-      this.usuario = this.identity.nombre ;
-      this.perfil = this.identity.usuario;
+    this.identity = JSON.parse(localStorage.getItem('identity'));
+    if (this.identity!==null && this.identity!==undefined ) {
+      this.empresa = this.identity.EmpresaNombre;
+      this.fechaTrabajo = this.identity.Fecha;
+      this.sucursal = this.identity.SucursalNombre;
+      this.usuario = this.identity.Nombre ;
+      this.perfil = this.identity.Usuario;
 
       //console.log(this.identity);
     } else {
-
       console.log('header no se encontro localStorage.nombre');
-
     }
-    //this.getnotificiones();
+
     this.getimagen();
 
   }
@@ -89,15 +85,13 @@ constructor (
     this._perfilService.perfil_lst(this.perfil).subscribe(
       response => {
         if (response.perfil){
-          this.foto = response.perfil[0].Nombre;
-          this.foto = 'assets/img/users/' + this.foto;
-          //console.log(this.foto);
-          // this.noti_lst = this.notificacion;
-          // this.mensajes = this.noti_lst.length;
-          // console.log(this.notificacion);
-
-
-
+          console.log('perfin',response.perfil);
+          if (response.perfil.length > 0){
+            this.foto = response.perfil[0].Nombre;
+            this.foto = 'assets/img/users/' + this.foto;
+          } else {
+            this.foto = 'assets/img/users/admin-image.png';
+          }
         }
       },
       error=>{

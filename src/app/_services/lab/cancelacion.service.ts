@@ -24,12 +24,19 @@ export class CancelacionService {
             res=>res.json()        
             );
    } 
-   cancelacion_lst(_id){  
+   cancelacion_lstdet(_id){  
+    let mkid=_id; 
+    let headers = new Headers({'Content-Type':'application/json'});
+    return this._http.get(this.url+'/cancelacionesdet/'+mkid, {headers:headers}).map(
+        res=>res.json()        
+        );
+}  
+cancelacion_lst(_id){  
     let mkid=_id; 
     let headers = new Headers({'Content-Type':'application/json'});
     return this._http.get(this.url+'/cancelaciones/'+mkid, {headers:headers}).map(
         res=>res.json()        
         );
-}    
+}  
   
 }

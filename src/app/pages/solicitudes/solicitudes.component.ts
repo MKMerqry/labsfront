@@ -52,6 +52,7 @@ export class SolicitudesComponent implements OnInit, AfterViewInit {
   tipocambio: number;
   tipocambiores: any;
   info: any;
+  identity: any;
   formasolicitud: FormGroup;
   formapago: FormGroup;
  
@@ -81,10 +82,11 @@ export class SolicitudesComponent implements OnInit, AfterViewInit {
       this.restadolares = 0;
       this.title="Solicitudes"
       this.formatofecha = Cfg.formatoFecha;
-
+      this.identity=JSON.parse(localStorage.getItem('identity'));
        }
 
   ngOnInit() {
+
     this.getsolicitud();
     //this.info = JSON.parse(localStorage.getItem("solicitud"));
     this.topics = ['C', 'C#']; 
@@ -187,6 +189,7 @@ export class SolicitudesComponent implements OnInit, AfterViewInit {
       response => {
         //console.log(response.articulo);
         if (response.cancelacion) {
+          console.log(response.cancelacion);
           //this.formapagcoblst = response.formapagcob;
           Swal.fire('MerQry','El folio se encuentra disponible',"success");
           localStorage.removeItem("folio");
@@ -232,7 +235,7 @@ export class SolicitudesComponent implements OnInit, AfterViewInit {
 }
 
     getsolicitud() {
-      this._bancoService.banco_list('1').subscribe(
+      this._bancoService.banco_list(this.identity.Sucursal).subscribe(
         response => {
           if (response.banco) {
             this.solicitudlst = response.banco;

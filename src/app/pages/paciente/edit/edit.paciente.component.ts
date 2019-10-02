@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators, FormArray, FormBuilder } from '@ang
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PacienteService } from '../../../_services/lab/paciente.service';
 import { ScriptLoaderService } from '../../../_services/script-loader.service';
+import { Datefuctions } from '../../../_functions/date.function'
 import Swal from 'sweetalert2';
 
 declare var $: any;
@@ -53,6 +54,7 @@ export class PacienteEditComponent implements OnInit,  OnChanges, AfterViewInit 
       sexo : [{value: ''}, Validators.required],
       correo : [{value: ''}, Validators.required],
       estatus: [{value: ''}, Validators.required],
+      telefono: [{value: ''}, Validators.required],
     });
 
     if (this.mkid=='0') {
@@ -67,7 +69,7 @@ getnewid(){
     response => {
       if (response.pacienteID) {
         this.pacientenew=response.pacienteID[0][0].Clave;
-        console.log(this.pacientenew);
+        //console.log(this.pacientenew);
         this.pacienteforma.controls['contacto'].setValue(this.pacientenew);
       }
     },
@@ -104,6 +106,7 @@ createFormPaciente() {
     this.pacienteforma.controls['edad'].setValue('');
     this.pacienteforma.controls['sexo'].setValue('');
     this.pacienteforma.controls['correo'].setValue('');
+    this.pacienteforma.controls['telefono'].setValue('');    
     this.pacienteforma.controls['estatus'].setValue('ACTIVO');
 
   } else {
@@ -113,14 +116,16 @@ createFormPaciente() {
       response => {
         if (response.paciente) {
           this.paciente = response.paciente;
+          console.log(this.paciente);
           this.pacienteforma.controls['contacto'].setValue(this.paciente[0].Contacto);
           this.pacienteforma.controls['nombre'].setValue(this.paciente[0].Nombre);
           this.pacienteforma.controls['paterno'].setValue(this.paciente[0].ApellidoPaterno);
           this.pacienteforma.controls['materno'].setValue(this.paciente[0].ApellidoMaterno);
-          this.pacienteforma.controls['nacimiento'].setValue(this.paciente[0].FechaNacimientoE);
+          this.pacienteforma.controls['nacimiento'].setValue(Datefuctions.getFechaSinHora_ymd(this.paciente[0].FechaNacimientoE));
           this.pacienteforma.controls['edad'].setValue(this.paciente[0].Edad);
           this.pacienteforma.controls['sexo'].setValue(this.paciente[0].Sexo);
           this.pacienteforma.controls['correo'].setValue(this.paciente[0].Email);
+          this.pacienteforma.controls['telefono'].setValue(this.paciente[0].Telefono);
           this.pacienteforma.controls['estatus'].setValue('ACTIVO');
         }
       },
@@ -144,8 +149,8 @@ mk_save(){
     Swal.fire('MerQry','La fecha de nacimiento es un dato obligatorio', 'error');       
   } else if ( this.pacienteforma.value.sexo == "" || !this.pacienteforma.value.sexo ) {
     Swal.fire('MerQry','El genero es un dato obligatorio', 'error');
-  } else if ( this.pacienteforma.value.correo == "" || !this.pacienteforma.value.correo ) {
-    Swal.fire('MerQry','El correo es un dato obligatorio', 'error');   
+ // } else if ( this.pacienteforma.value.telefono == "" || !this.pacienteforma.value.correo ) {
+   // Swal.fire('MerQry','El correo es un dato obligatorio', 'error');   
   } else {
 
       if (this.mkid=='0') {
@@ -191,18 +196,6 @@ mk_save(){
 
 ngAfterViewInit() {
   this._script.load('./assets/js/scripts/form-plugins.js');
-    //this._script.load('./assets/js/scripts/dashboard_6.js', './assets/js/scripts/calendar-demo.js');
-    //console.log('fin');
-    //console.log(this.nombre); // aparece la propiedad nativeElement y dentro una gran cantidad de propiedades y métodos
-    //this.nombre.nativeElement.setAttribute('placeholder', 'Escriba su nombre');
-    //this.nombre.nativeElement.addClass('una-clase');
-    //this.nombre.nativeElement.focus();
 
-  //this._script.load('./assets/js/scripts/dashboard_6.js', './assets/js/scripts/calendar-demo.js');
-  //console.log('fin');
-  //console.log(this.nombre); // aparece la propiedad nativeElement y dentro una gran cantidad de propiedades y métodos
-  //this.nombre.nativeElement.setAttribute('placeholder', 'Escriba su nombre');
-  //this.nombre.nativeElement.addClass('una-clase');
-  //this.nombre.nativeElement.focus();
   }
 }

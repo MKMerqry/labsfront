@@ -74,12 +74,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
 		this.getEmpresaAll();
 		this.getSucursalAll();
 		this.createFormLogin();
-		this.formaLogin.reset();   
-		this.formaLogin.controls['surname'].setValue('');
-		 this.formaLogin.controls['password'].setValue('');
-		 this.formaLogin.controls['empresa'].setValue('');
-		this.formaLogin.controls['sucursal'].setValue('');
-		this.formaLogin.controls['fechatrabajo'].setValue(Datefuctions.getFechaSinHora_ymd(this.hoy));
+
 	}
 
 
@@ -91,6 +86,12 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
 		  sucursal : [{value: ''},Validators.required],
 		  fechatrabajo : [{value: ''},Validators.required],
 		});
+		this.formaLogin.reset();   
+		this.formaLogin.controls['surname'].setValue('');
+		 this.formaLogin.controls['password'].setValue('');
+		 this.formaLogin.controls['empresa'].setValue('');
+		this.formaLogin.controls['sucursal'].setValue('');
+		this.formaLogin.controls['fechatrabajo'].setValue(Datefuctions.getFechaSinHora_ymd(this.hoy));
 	  }
 
 	ngAfterViewInit() {
@@ -139,29 +140,21 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 	
 	MkClickLogin(){
-		this.empresalstlog = this.empresalst.filter( emp => emp.empresa == this.formaLogin.value.empresa);
-		this.sucursallstlog = this.sucursallst.filter( suc => suc.sucursal == this.formaLogin.value.sucursal);
 
-		this.loginUser = this.formaLogin.value.surname;
-		this.loginPassword = this.formaLogin.value.password;
-		this.loginEmpresa = this.formaLogin.value.empresa;
-		this.loginSucursal = this.formaLogin.value.sucursal;
-		this.loginFechaTrabajo = this.formaLogin.value.fechatrabajo;
-
-		if ( this.loginUser == "" || !this.loginUser ||
-			 this.loginPassword == "" || !this.loginPassword ||
-			 this.loginEmpresa == "" || !this.loginEmpresa ||
-			 this.loginSucursal == "" || !this.loginSucursal ||
-			 this.loginFechaTrabajo == "" || !this.loginFechaTrabajo    ) {
+		if ( this.formaLogin.value.surname == "" || !this.formaLogin.value.surname ||
+		this.formaLogin.value.password == "" || !this.formaLogin.value.password ||
+		this.formaLogin.value.empresa == "" || !this.formaLogin.value.empresa ||
+		this.formaLogin.value.sucursal == "" || !this.formaLogin.value.sucursal ||
+		this.formaLogin.value.fechatrabajo == "" || !this.formaLogin.value.fechatrabajo  ) {
 			Swal.fire('MerQry','El usuario no se ha logueado correctamente', 'error');
 			this.status='error';		
 		} else {	
 			this._userService.signup(this.formaLogin.value).subscribe(
 				response=>{	
-					this.loginMensaje=response[0][0].mensaje;
-					
+					this.loginMensaje=response[0][0].mensaje;					
 					if (this.loginMensaje=='OK'){
 						this.identity=response[0][0];
+						this.identity.Fecha=this.formaLogin.value.fechatrabajo;
 						localStorage.setItem('identity',JSON.stringify(this.identity));
 						this._userService.signup(this.formaLogin.value,'true').subscribe(
 							response=>{
@@ -171,17 +164,6 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
 								//	this.status='error';
 								//}else{
 									localStorage.setItem('token', this.token);
-									this.LSlogin = { 
-										usuario:this.loginUser, 
-										empresa:this.loginEmpresa,
-										empnombre:this.empresalstlog[0].nombre,
-										sucursal:this.loginSucursal,
-										sucnombre:this.sucursallstlog[0].nombre,
-										fecha:this.loginFechaTrabajo
-									 };
-																	
-									localStorage.setItem('login',JSON.stringify(this.LSlogin));
-									this.status = 'success';
 									Swal.fire('MerQry Welcome' ,this.identity.nombre, 'success');
 									console.log(this.formaLogin.value);
 									this._router.navigate(['index']);

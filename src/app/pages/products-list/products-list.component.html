@@ -9,68 +9,130 @@
     <div class="page-content fade-in-up" >
         <div class="ibox">
                 <div class="ibox-body">
-                    <form class="form-inline"  [formGroup]="formsolicitud" >
-                        <div class="col-sm-3 form-group" >
-                            <label >Tipo</label>
-                            <select class="form-control" formControlName="tipoNom" >  
-                                <option value="" disabled selected>Tipo</option>  
-                                <option *ngFor="let u of tipoNomlis" [ngValue]="u">{{u}}</option>                                        
-                            </select>
-                        </div>
-                        <div class="col-sm-3 form-group" >  
-                            <label >Paciente</label>                                      
-                            <select class="form-control" id="paciente" name="paciente" formControlName="paciente" (change)="onChange($event.target.value)" >  
-                                <option value="" disabled selected>Paciente</option>   
-                                <option value="nuevo" >Agregar nuevo</option>                      
-                                <option *ngFor="let u of pacientelst" [ngValue]="u.Contacto">{{u.MKNombre}}</option>
-                            </select> 
-                        </div>
-                        <div class="col-sm-3 form-group" >
-                            <label >Corporativo</label>
-                            <select class="form-control" id="corporativo" name="corporativo" formControlName="corporativo" >  
-                                <option value="" disabled selected>Corporativo</option>                        
-                                <option *ngFor="let u of pacientelst" [ngValue]="u.Contacto">{{u.MKNombre}}</option>
-                            </select> 
-                        </div>
-                        <div class="col-sm-3 form-group" >
-                            <label >Doctor</label>
-                            <select class="form-control" name="doctor" formControlName="doctor" >  
-                                <option value="" disabled selected>Doctor</option>                        
-                                <option *ngFor="let u of doclst" [ngValue]="u.Contacto">{{u.MKNombre}}</option>
-                            </select>  
-                        </div>                    
-
-                    </form>
-                    <div *ngIf="showfolio" class="font-13">                             
-                        <a class="text-muted font-13" (click)="mk_quitarfolio()">
-                            <i class="ti-trash"></i>
-                        </a> Folio Reciclado:  
-                        <b>{{folionew}}</b>
-                    </div> 
-                </div>
+                        <form class="form-info" id="formsolicitud" [formGroup]="formsolicitud">
+                            <div class="row">
+                                <div class="col-sm-3 form-group mb-4">
+                                    <label>Tipo</label>
+                                    <select class="form-control form-control-air" name="tipoNom" placeholder="Tipo" formControlName="tipoNom">
+                                        <option value="Personal" selected>Personal</option> 
+                                        <option value="Empresa/Seguro">Empresa/Seguro</option>                                        
+                                    </select>
+                                </div>
+                                <div class="col-sm-3 form-group mb-4">
+                                    <label>Paciente</label>
+                                    <select class="form-control" id="paciente" name="paciente" formControlName="paciente" (change)="onChange($event.target.value)" >  
+                                        <option value="" disabled selected>Paciente</option>   
+                                        <option class="text-blue" value="nuevo" >Agregar nuevo</option>                      
+                                        <option *ngFor="let u of pacientelst" [ngValue]="u.Contacto">{{u.MKNombre}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-3 form-group mb-4">
+                                    <label>Corporativo</label>
+                                    <select class="form-control" id="corporativo" name="corporativo" formControlName="corporativo" >  
+                                        <option value="" disabled selected>Corporativo</option>                        
+                                        <option *ngFor="let u of pacientelst" [ngValue]="u.Contacto">{{u.MKNombre}}</option>
+                                    </select> 
+                                </div>
+                                <div class="col-sm-3 form-group mb-4">
+                                    <label>Doctor</label>
+                                    <select class="form-control" name="doctor" formControlName="doctor" >  
+                                        <option value="" disabled selected>Doctor</option>                        
+                                        <option *ngFor="let u of doclst" [ngValue]="u.Contacto">{{u.MKNombre}}</option>
+                                    </select> 
+                                </div>  
+                                <div class="col-sm-3 form-group mb-4">
+                                    <label>Folio Editar</label>
+                                     <input class="form-control form-control-air" type="text"  name="folioedit" placeholder="Editar" formControlName="folionew"   > 
+                
+                                </div>
+                                <div class="col-sm-3 form-group mb-4">
+                                    <label>Encuesta</label>
+                                    <select class="form-control form-control-air" formControlName="encuesta" name="encuesta"  placeholder="Encuesta" >
+                                            <option value="Anuncio Afuera">Anuncio Afuera</option>
+                                            <option value="Conocido">Conocido</option>
+                                            <option value="Internet">Internet</option>
+                                            <option value="Recomendacion">Recomendacion</option>
+                                            <option value="Medico">Medico</option>
+                                            <option value="Otro">Otro</option>
+                                            <option value="Periodico">Periodico</option>
+                                            <option value="Radio">Radio</option>
+                                            <option value="Television">Television</option>
+                                            <option value="TV Azteca">TV Azteca</option>
+                                            <option value="TV Televisa">TV Televisa</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-3 form-group mb-4">
+                                    <label>Tipo Servicio</label>
+                                    <select class="form-control form-control-air" name="tiposervicio" placeholder="Tipo Servicio" formControlName="tiposervicio">
+                                        <option value="Ordinario" selected>Ordinario</option> 
+                                        <option value="Urgente">Urgente</option>                                        
+                                    </select>
+                                </div>
+                                <div class="col-sm-3 form-group mb-4">
+                                    <label>Toma Muestra</label>
+                                    <select class="form-control form-control-air" name="tomamuestra" placeholder="Muestra" formControlName="tomamuestra">
+                                        <option value="Sucursal" selected>Sucursal</option> 
+                                        <option value="Externa">Externa</option>                                        
+                                    </select>
+                                </div>         
+                                <div class="col-sm-3 form-group mb-4">
+                                    <label>Envio</label>
+                                    <select class="form-control form-control-air" name="tipoenvio" placeholder="Envio" formControlName="tipoenvio">
+                                        <option value="Indefinido" selected>Indefinido</option> 
+                                        <option value="Email">Email</option>    
+                                        <option value="Consultorio">Consultorio</option> 
+                                        <option value="Ambos">Ambos</option> 						
+                                    </select>
+                                </div>                       
+                            </div>
+                        </form>
+                    </div>                    
         </div>
       
         <div class="row">
+                <div class="col-md-6"> 
+                        <div class="ibox">
+                             <div class="ibox-head">
+                                    
+                                            <div class="ibox-title">TOTAL : {{total | currency}}</div>
+                                            <button class="btn btn-primary btn-rounded btn-air my-3" data-toggle="modal" (click)="mk_pagar()" >
+                                                <span class="btn-icon"><i class="la la-plus"></i>Pagar</span>
+                                            </button>
+                                  
+
+                            </div> 
+                            <div class="ibox-body">
+                                    <div class="table-responsive row">
+                                            <table class="table table-bordered table-head-purple table-border-purple mb-5" id="tlbcomprados">
+                                                <thead class="thead-default thead-lg">
+                                                    <tr>
+                                                        <th class="no-sort">#</th> 
+                                                        <th>Producto</th>
+                                                        <th>Cant</th>
+                                                        <th>Precio</th>                         
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let u of detalle; let i = index">  
+                                                        <td> 
+                                                            <a class="text-muted font-16" (click)="mk_quitar(i)"><i class="ti-trash"></i></a>
+                                                         </td>
+                                                        <td class="text-left">( {{u.Articulo}} ) - {{u.Descripcion}} </td>  
+                                                        <td class="text-center">{{u.MKCantidad}}</td>
+                                                        <td class="text-right">{{u.pxcNeto | currency}}</td>
+                                                </tr>
+                                            </tbody>
+                                    </table>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+
+
             <div class="col-md-6"> 
                 <div class="ibox">
                      <div class="ibox-head">
-                            <!-- <div class="flexbox mb-4"> -->
-                                    <div class="flexbox">
-                                        <label class="mb-0 mr-2">Encuesta:</label>
-                                        <select class="selectpicker show-tick form-control" formControlName="concepto" id="mktype-filter" title="Please select" data-style="btn-solid" data-width="150px" (change)="onChangeEncuenta($event.target.value)" >
-                                                <option value="ANUNCIO AFUERA">ANUNCIO AFUERA</option>
-                                                <option value="CONOCIDO">CONOCIDO</option>
-                                                <option value="INTERNET">INTERNET</option>
-                                                <option value="LO RECOMENDARON">LO RECOMENDARON</option>
-                                                <option value="MEDICO">MEDICO</option>
-                                                <option value="OTRO">OTRO</option>
-                                                <option value="PERIODICO">PERIODICO</option>
-                                                <option value="RADIO">RADIO</option>
-                                                <option value="TELEVISION">TELEVISION</option>
-                                                <option value="TV AZTECA">TV AZTECA</option>
-                                                <option value="TV TELEVISA">TV TELEVISA</option>
-                                        </select>
-                                    </div>
+
                                     <div class="input-group-icon input-group-icon-left mr-3">
                                         <span class="input-icon input-icon-right font-16"><i class="ti-search"></i></span>
                                         <input class="form-control form-control-rounded form-control-solid" id="key-search" type="text" placeholder="Search ...">
@@ -102,42 +164,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6"> 
-                <div class="ibox">
-                     <div class="ibox-head">
-                        <div class="ibox-title">
-                            <!-- <div class="flexbox mb-3"> -->
-                                <span class="h3 mb-0 text-primary font-strong ml-2 text-right">TOTAL : {{total | currency}}        .</span>
-                                <button class="btn btn-primary btn-rounded" (click)="mk_pagar()" >Pagar</button> 
-                            <!-- </div>  -->
-                        </div>
-                    </div> 
-                    <div class="ibox-body">
-                            <div class="table-responsive row">
-                                    <table class="table table-bordered table-hover" id="tlbcomprados">
-                                        <thead class="thead-default thead-lg">
-                                            <tr>
-                                                <th class="no-sort">#</th> 
-                                                <th>Producto</th>
-                                                <th>Cant</th>
-                                                <th>Precio</th>                         
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr *ngFor="let u of detalle; let i = index">  
-                                                <td> 
-                                                    <a class="text-muted font-16" (click)="mk_quitar(i)"><i class="ti-trash"></i></a>
-                                                 </td>
-                                                <td class="text-left">( {{u.Articulo}} ) - {{u.Descripcion}} </td>  
-                                                <td class="text-center">{{u.MKCantidad}}</td>
-                                                <td class="text-right">{{u.pxcNeto | currency}}</td>
-                                        </tr>
-                                    </tbody>
-                            </table>
-                            </div>
-                    </div>
-                </div>
-            </div>
+
         </div>
 
 
@@ -203,6 +230,12 @@
                                     <input class="form-control form-control-air" type="text" name="correo" formControlName="correo" >
                                 </div>
                             </div> 
+                            <div class="form-group mb-4 row">
+                                    <label class="col-sm-2 col-form-label">Telefono</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control form-control-air" type="text" name="telefono" formControlName="telefono" >
+                                    </div>
+                                </div> 
                             <div class="form-group text-center">
                                 <button class="btn btn-outline-success btn-fix btn-thick" (click)="mk_guardarpaciente()">
                                     <span class="btn-icon"><i class="ti-save"></i>Guardar</span>

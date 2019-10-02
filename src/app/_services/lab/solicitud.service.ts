@@ -22,9 +22,10 @@ export class SolicitudService {
     }
 
 
-    solicitud_list() {
+    solicitud_list(_id) {
+        let mkid = _id;
         let headers = new Headers({ 'Content-Type': 'application/json' });
-        return this._http.get(this.url + '/solicitud', { headers: headers }).map(
+        return this._http.get(this.url + '/solicitud/' + mkid, { headers: headers }).map(
             res => res.json()
         );
     }
@@ -32,7 +33,7 @@ export class SolicitudService {
     solicitud_uno(_id) {
         let mkid = _id;
         let headers = new Headers({ 'Content-Type': 'application/json' });
-        return this._http.get(this.url + '/solicitud/' + mkid, { headers: headers }).map(
+        return this._http.get(this.url + '/solicituduno/' + mkid, { headers: headers }).map(
             res => res.json()
         );
     }

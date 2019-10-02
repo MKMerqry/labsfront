@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { SolicitudService } from '../../../_services/lab/solicitud.service';
 import { RecipienteService } from '../../../_services/lab/recipiente.service';
 import { ResultadoService } from '../../../_services/lab/resultado.service';
+import { CorreoService } from '../../../_services/lab/correo.service';
 import { FormGroup, FormControl, Validators, FormArray, FormBuilder  } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AutorizaService } from '../../../_services/lab/autoriza.service';
@@ -11,14 +12,14 @@ import { HttpClient } from '@angular/common/http';
 import { Cfg } from '../../../_config/gral.config';
 import { LinkService } from '../../../_services/login/link.service';
 import Swal from 'sweetalert2';
-
+export interface wfe {formawfe: string}
 
 declare var $:any;
 
 @Component({
   selector: 'app-select-resultado',
   templateUrl: './select.resultado.component.html',
-  providers:[SolicitudService,RecipienteService,ResultadoService,AutorizaService,LinkService]
+  providers:[SolicitudService,RecipienteService,ResultadoService,AutorizaService,LinkService,CorreoService]
 })
 
 export class SelectResultadoComponent implements OnInit {
@@ -57,6 +58,7 @@ export class SelectResultadoComponent implements OnInit {
   public login: any;
   public link: any;
   public linkd: any;
+  public objwfe: wfe= {formawfe:"Archivar"};
 
   constructor(
     private _rutaActiva: ActivatedRoute,
@@ -68,6 +70,7 @@ export class SelectResultadoComponent implements OnInit {
     private _router:Router,
     private httpClient: HttpClient,
     private _linkService :LinkService,
+    private _correoService:CorreoService,
   ) { 
     this.title="Captura de Resultados";
     this.solicitud=[];;
@@ -375,8 +378,26 @@ export class SelectResultadoComponent implements OnInit {
 		} else if ( this.estatus == "PENDIENTE"  ) {
       Swal.fire('MerQry','El estatus debe estar CONCLUIDO', 'error');
     } else {
+
+      this._correoService.correo_new(this.objwfe).subscribe(
+        response => {
+          if (response.correo) {
+            //this.solicitud = response.solicitud;
+            Swal.fire('MerQry','Se guardo correctamente','success');
+            //this.ngOnInit();
+          }
+        },
+        error => {
+          var errorMessage = <any>error;
+          if (errorMessage != null) {
+            var mkerrores =JSON.parse(error._body);
+            Swal.fire('MerQry', mkerrores.message, 'error');
+          }
+        });
+
       Swal.fire('MerQry','Se envio correctamente','success');
     }
+
     
   }
 
